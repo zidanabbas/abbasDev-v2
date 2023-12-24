@@ -1,4 +1,4 @@
-import Coffee from "./elements/Coffee";
+import Coffee from "@/app/components/elements/Coffee.js";
 
 export default function HeaderHome() {
   return (
