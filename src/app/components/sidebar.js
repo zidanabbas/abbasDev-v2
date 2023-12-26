@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
-import { navLists } from "./../constants/navLists";
+import { navLists } from "@/app/components/navLists.js";
 import { usePathname } from "next/navigation";
-import Me from "./sidebarComponents/me";
+import Me from "@/app/components/sidebarComponents/me.js";
 import { Divider } from "@nextui-org/react";
 import { useState, useEffect, useRef } from "react";
-import Copyright from "./elements/copyright";
-import ThemeSwitcher from "./elements/ThemeSwitcher";
+import Copyright from "@/app/components/elements/Copyright.js";
+import ThemeSwitcher from "@/app/components/elements/ThemeSwitcher.js";
 import { motion } from "framer-motion";
-import useHasMounted from "./hooks/useHasMounted";
+import useHasMounted from "@/app/components/hooks/useHasMounted.js";
 
 export default function Sidebar() {
   const [isActive, setIsActive] = useState(false);
