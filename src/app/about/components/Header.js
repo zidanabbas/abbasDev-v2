@@ -22,7 +22,7 @@ export default function Header() {
           frameworks like TailwindCSS, React, and Angular.
         </p>
         <p className="font-light text-md leading-7">
-          What distinguishes Reza is his quick adaptability to new challenges,
+          What distinguishes Abbas is his quick adaptability to new challenges,
           making him a promising front-end developer. Despite his limited
           experience, he actively seeks resources and tutorials to stay
           up-to-date with web development's evolving landscape. Reza's
