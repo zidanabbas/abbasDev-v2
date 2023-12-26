@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import Layouts from "@/app/components/Layouts.js";
 
 const inter = Inter({ subsets: ["latin"] });
 const sora = Sora({
@@ -17,7 +18,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Zidane Abbas - Personal website",
     description: "Personal Website, Portofolio, roadMap and More",
+    url: "localhost:3000",
     siteName: "zdnabbs",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dlshk9mf6/image/upload/c_crop,g_face,h_1400,w_1400/abbasImage/ywo8qfhriij23ya8refa.jpg",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "id-ID",
+    type: "website",
   },
 };
 
@@ -29,7 +40,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={sora.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Layouts>{children}</Layouts>
+        </Providers>
       </body>
     </html>
   );
