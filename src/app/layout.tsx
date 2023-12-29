@@ -11,7 +11,7 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Home || Zidane Abbas",
+  title: "Home | Zidane Abbas",
   description: "Personal Website, Portofolio, roadMap and More",
   keywords: "Zidane Abbas, zdnabbs, zidaneabbs, portofolio abbas",
   creator: "Zidane Abbas",
