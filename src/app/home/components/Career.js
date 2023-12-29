@@ -2,6 +2,7 @@ import { BiBriefcaseAlt2 } from "react-icons/bi";
 import Heading from "@/app/components/elements/Heading.js";
 import SubHeading from "@/app/components/elements/SubHeading.js";
 import Link from "next/link";
+import Image from "next/image";
 import { CareerLists } from "@/app/components/dataDummy/CareerLists.js";
 export default function Career() {
   return (
@@ -31,11 +32,12 @@ export default function Career() {
                   className="rounded-xl transition-all duration-300 shadow-sm lg:hover:shadow-md flex items-center gap-5 py-4 px-6 border border-neutral-300 dark:border-neutral-800 dark:bg-neutral-800"
                 >
                   <div className="bg-neutral-300 items-center dark:bg-neutral-600 rounded-full">
-                    <img
+                    <Image
                       src={logo}
                       alt=""
                       width={70}
                       className="rounded-full"
+                      height={70}
                     />
                   </div>
                   <div className="flex-col flex space-y-2">
