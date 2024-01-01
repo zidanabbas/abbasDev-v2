@@ -20,6 +20,7 @@ function GithubHeader() {
         setLoading(false);
       }, 2000);
   }, [mounted]);
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -27,7 +28,7 @@ function GithubHeader() {
         <SubHeading>
           <p>My Github Contributions</p>
           <Link href="https://github.com/zidanabbas" target="_blank">
-            @ryznoxy
+            @zidanabbas
           </Link>
         </SubHeading>
       </div>
