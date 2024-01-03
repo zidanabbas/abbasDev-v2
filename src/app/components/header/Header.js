@@ -1,4 +1,5 @@
 import Coffee from "@/app/components/elements/Coffee.js";
+import CurriculumVitae from "@/app/components/elements/CurriculumVitae.js";
 
 export default function HeaderHome() {
   return (
@@ -7,7 +8,10 @@ export default function HeaderHome() {
         <h1 className="md:text-3xl text-2xl font-medium flex gap-1">
           Hi, I'm Abbas <p className="animate-shake">👋</p>
         </h1>
-        <Coffee />
+        <div className="flex items-center gap-3 px-2">
+          <Coffee />
+          <CurriculumVitae />
+        </div>
       </div>
       <ul className="flex md:space-x-8 space-x-0 px-5 py-2 md:flex-row flex-col ">
         <li className="list-disc text-md">Beginner Front End Dev</li>
