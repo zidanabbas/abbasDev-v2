@@ -2,6 +2,10 @@ import React from "react";
 import ContainerAOS from "@/app/components/elements/ContainerAOS";
 import DashedDivider from "@/app/components/elements/DashedDivider";
 import { Divider } from "@nextui-org/react";
+import Header from "../dashboard/components/Header";
+import GithubHeader from "../dashboard/components/GithubHeader";
+import Spotify from "../dashboard/components/spotify/index";
+import Stats from "../dashboard/components/stats/Stat";
 
 export const metadata = {
   title: "Dashboard | Abbas",
@@ -14,7 +18,15 @@ export default function Dashboard() {
   return (
     <>
       <ContainerAOS>
-        <div className="h-full"></div>
+        <div className="h-full">
+          <Header />
+          <DashedDivider className={"my-6"} />
+          <Stats />
+          <Divider className="my-6" />
+          <GithubHeader />
+          <Divider className="my-6" />
+          <Spotify />
+        </div>
       </ContainerAOS>
     </>
   );
