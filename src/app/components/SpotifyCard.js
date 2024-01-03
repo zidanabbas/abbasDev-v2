@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useGetDataSpotify } from "../hooks/useGetDataSpotify";
+import { useGetDataSpotify } from "@/app/components/hooks/useGetDataSpotify";
 import { BiLogoSpotify } from "react-icons/bi";
 
 export default function SpotifyCard() {
