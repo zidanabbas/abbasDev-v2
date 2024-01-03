@@ -3,6 +3,8 @@ import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Layouts from "@/app/components/Layouts.js";
+import SpotifyTop from "@/app/components/elements/SpotifyTop";
+import TopLoader from "@/app/components/elements/TopLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 const sora = Sora({
@@ -41,6 +43,8 @@ export default function RootLayout({
     <html lang="en" className="light">
       <body className={sora.className}>
         <Providers>
+          <SpotifyTop />
+          <TopLoader />
           <Layouts>{children}</Layouts>
         </Providers>
       </body>
