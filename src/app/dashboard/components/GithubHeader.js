@@ -11,7 +11,7 @@ import useHasMounted from "@/app/components/hooks/useHasMounted";
 import GitHubCalendar from "react-github-calendar";
 
 function GithubHeader() {
-  const [theme, setTheme] = useTheme();
+  const { theme, setTheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const mounted = useHasMounted();
 
