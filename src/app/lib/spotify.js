@@ -31,13 +31,14 @@ export const getAccessToken = async () => {
     const data = await response.json();
     return data.access_token;
   } catch (error) {
-    console.log();
+    console.error("Error fetching access token:", error);
+    return null;
   }
 };
 
 export async function getCurrentTrack(accessToken) {
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}}`);
+  myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
   const requestOptions = {
     method: "GET",
@@ -50,10 +51,10 @@ export async function getCurrentTrack(accessToken) {
       "https://api.spotify.com/v1/me/player/currently-playing",
       requestOptions
     );
-
     const data = await response.json();
-    return data ? data : null;
+    return data || null;
   } catch (err) {
+    console.error("Error fetching current track:", err);
     return null;
   }
 }
