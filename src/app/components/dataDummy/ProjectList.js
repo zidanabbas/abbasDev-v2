@@ -199,4 +199,41 @@ export const ProjectList = [
       slug: "note-app",
     },
   },
+  {
+    id: 0,
+    title: "todo-list",
+    description:
+      "This is a project todo list application that I created while studying at Dicoding Academy Indonesia. Where this todo list project can create unread and read notes and also has a what has been done and what has not been done.",
+    slug: "todo-list-abbas",
+    link_demo: "https://project-todo-list-v1.vercel.app/",
+    link_github: "hhttps://github.com/zidanabbas/todo-list",
+    tech_stack: [
+      {
+        title: "React JS",
+        icon: <SiReact size={iconSize} className="text-purple-700" />,
+      },
+      {
+        title: "Javascript",
+        icon: <SiJavascript size={iconSize} className="text-yellow-400" />,
+      },
+      {
+        title: "HTML",
+        icon: <SiHtml5 size={iconSize} className="text-blue-500" />,
+      },
+      {
+        title: "Vercel",
+        icon: <SiVercel size={iconSize} />,
+      },
+    ],
+
+    tooltip: ["React JS", "JavaScript", "HTML", "Vercel"],
+    aos_delay: 800,
+    image:
+      "https://res.cloudinary.com/dlshk9mf6/image/upload/v1704360297/mobile_19_tfag4s.png",
+    is_show: true,
+    is_featured: false,
+    params: {
+      slug: "todo-list",
+    },
+  },
 ];
