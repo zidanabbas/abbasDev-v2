@@ -10,11 +10,46 @@ import {
   SiBootstrap,
   SiFigma,
   SiVercel,
+  SiCss3,
 } from "react-icons/si";
 
 const iconSize = 24;
 
 export const ProjectList = [
+  {
+    id: 6,
+    title: "Calculator App",
+    description:
+      "This is a simple calculator project that I made using JavaScript, HTML and CSS technology when I studied at Dicoding Academy.",
+    slug: "Calculator-app",
+    link_demo: "https://kalkulator-sederhana-mu.vercel.app/",
+    link_github: "https://github.com/zidanabbas/Kalkulator-sederhana",
+    tech_stack: [
+      {
+        title: "Javascript",
+        icon: <SiJavascript size={iconSize} className="text-yellow-400" />,
+      },
+      {
+        title: "HTML",
+        icon: <SiHtml5 size={iconSize} className="text-blue-500" />,
+      },
+      {
+        title: "CSS",
+        icon: <SiCss3 size={iconSize} className="text-blue-500" />,
+      },
+    ],
+
+    tooltip: ["HTML", "Javascript", "CSS"],
+    aos_delay: 200,
+
+    image:
+      "https://res.cloudinary.com/dlshk9mf6/image/upload/v1704361063/mobile_20_ybmsp9.png",
+    is_show: true,
+    is_featured: false,
+    params: {
+      slug: "calculator-app",
+    },
+  },
   {
     id: 5,
     title: "Contacts App",
