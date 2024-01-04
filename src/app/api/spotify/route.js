@@ -18,8 +18,8 @@ export async function GET() {
   const lastTrack = await getLastPlayedTrack(accessToken);
   // const topTracks = await getTopTracks(accessToken);
 
-  const id = track ? track.item.id : null;
-  const trackId = await getTrack(accessToken, id);
+  const id = track && track.item ? track.item.id : null;
+  const trackId = id ? await getTrack(accessToken, id) : null;
 
   const playlist_id = track
     ? track.context.href
