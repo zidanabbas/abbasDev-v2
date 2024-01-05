@@ -4,6 +4,16 @@ import { Divider } from "@nextui-org/react";
 import Career from "@/app/home/components/Career";
 import ContactCard from "@/app/home/components/ContactCard";
 import SkillLists from "@/app/home/components/SkillList";
+import { Metadata } from "next";
+
+export const metadata = {
+  Metatitle: "Home | Abbas",
+  description: "Software Engineer portfolio ideas",
+  keywords: "portfolio frontend developer",
+  alternates: {
+    canonical: `${process.env.DOMAIN}/home`,
+  },
+};
 export default function HomePage() {
   return (
     <ContainerAOS>
