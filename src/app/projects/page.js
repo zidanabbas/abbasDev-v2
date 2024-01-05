@@ -5,6 +5,9 @@ export const metadata = {
   title: "Projects | Abbas",
   description: "Software Engineer portfolio ideas",
   keywords: "portfolio frontend developer",
+  alternates: {
+    canonical: `${process.env.DOMAIN}/projects`,
+  },
 };
 
 export default function Projects() {
