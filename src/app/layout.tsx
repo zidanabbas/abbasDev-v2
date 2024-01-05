@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Zidane Abbas - Personal website",
     description: "Personal Website, Portofolio, roadMap and More",
-    url: "localhost:3000",
+    url: "https://abbasdev.vercel.app/",
     siteName: "zdnabbs",
     images: [
       {
