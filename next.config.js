@@ -7,7 +7,7 @@ const nextConfig = {
     // Tambahkan URL produksi atau URL yang sesuai dengan kebutuhan kamu
     NEXT_PUBLIC_BASE_URL:
       process.env.NODE_ENV === "production"
-        ? "https://example.com"
+        ? "https://abbasdev.vercel.app/"
         : "http://localhost:3000",
   },
   // ... konfigurasi lainnya
