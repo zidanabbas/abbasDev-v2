@@ -7,8 +7,8 @@ export const CareerLists = [
     link: "https://www.instagram.com/iftaassociation/",
     logo: "https://res.cloudinary.com/dlshk9mf6/image/upload/v1703863195/abbasImage/trkscqizcuxvgvzk2ltz.jpg",
     location: "Jakarta Selatan",
-    date: "Maret 2022 - Mei 2023",
-    during: "1 year 2 months",
+    date: "April 2022 - July 2023",
+    during: "1 year 3 months",
     profession: "Web Developer",
   },
   // {
