@@ -11,13 +11,14 @@ import {
   SiFigma,
   SiVercel,
   SiCss3,
+  SiVite,
 } from "react-icons/si";
 
 const iconSize = 24;
 
 export const ProjectList = [
   {
-    id: 6,
+    id: 0,
     title: "Calculator App",
     description:
       "This is a simple calculator project that I made using JavaScript, HTML and CSS technology when I studied at Dicoding Academy.",
@@ -37,9 +38,13 @@ export const ProjectList = [
         title: "CSS",
         icon: <SiCss3 size={iconSize} className="text-blue-500" />,
       },
+      {
+        title: "Vercel",
+        icon: <SiVercel size={iconSize} />,
+      },
     ],
 
-    tooltip: ["HTML", "Javascript", "CSS"],
+    tooltip: ["HTML", "Javascript", "CSS", "Vercel"],
     aos_delay: 200,
 
     image:
@@ -51,7 +56,7 @@ export const ProjectList = [
     },
   },
   {
-    id: 5,
+    id: 1,
     title: "Contacts App",
     description:
       "contact app is an app that provides phone number identification service. With this application, users can view the tags or names of stored phone numbers",
@@ -61,15 +66,19 @@ export const ProjectList = [
     tech_stack: [
       {
         title: "Reactjs",
-        icon: <SiReact size={iconSize} />,
+        icon: <SiReact size={iconSize} className="text-purple-600" />,
       },
       {
         title: "Javascript",
         icon: <SiJavascript size={iconSize} className="text-yellow-400" />,
       },
+      {
+        title: "Vercel",
+        icon: <SiVercel size={iconSize} />,
+      },
     ],
 
-    tooltip: ["React.js", "Javascript"],
+    tooltip: ["React.js", "Javascript", "Vercel"],
     aos_delay: 200,
 
     image:
@@ -81,7 +90,7 @@ export const ProjectList = [
     },
   },
   {
-    id: 4,
+    id: 2,
     title: "abbasDev Personal Website v2",
     description:
       "Personal website and portfolio built with Next Js, Javascript and Tailwind CSS",
@@ -105,9 +114,19 @@ export const ProjectList = [
         title: "Framer",
         icon: <SiFramer size={iconSize} />,
       },
+      {
+        title: "Vercel",
+        icon: <SiVercel size={iconSize} />,
+      },
     ],
 
-    tooltip: ["Next.js", "Tailwind CSS", "Javascript", "Framer Motion"],
+    tooltip: [
+      "Next.js",
+      "Tailwind CSS",
+      "Javascript",
+      "Framer Motion",
+      "Vercel",
+    ],
     aos_delay: 200,
 
     image:
@@ -161,7 +180,7 @@ export const ProjectList = [
     },
   },
   {
-    id: 2,
+    id: 4,
     title: "v1 Abbas Personal Website",
     description:
       "This is my first personal website, which I created for my personal branding needs .",
@@ -178,8 +197,8 @@ export const ProjectList = [
         icon: <SiTailwindcss size={iconSize} className="text-cyan-300" />,
       },
       {
-        title: null,
-        icon: null,
+        title: "Vercel",
+        icon: <SiVercel size={iconSize} />,
       },
       {
         title: null,
@@ -187,7 +206,7 @@ export const ProjectList = [
       },
     ],
 
-    tooltip: ["HTML", "Tailwind CSS"],
+    tooltip: ["HTML", "Tailwind CSS", "Vercel"],
     aos_delay: 600,
     image:
       "https://res.cloudinary.com/dlshk9mf6/image/upload/v1703869616/abbasImage/af1zusni4duafzj5y2o7.png",
@@ -198,7 +217,7 @@ export const ProjectList = [
     },
   },
   {
-    id: 1,
+    id: 5,
     title: "Note App",
     description:
       "This is a project notes application that I made while studying at Dicoding Academy Indonesia. Where this note project uses the React JS library and implements Crud and also has an archive feature.",
@@ -229,19 +248,19 @@ export const ProjectList = [
     image:
       "https://res.cloudinary.com/dlshk9mf6/image/upload/v1703870188/abbasImage/ucohfhrkgts2up6qwtga.png",
     is_show: true,
-    is_featured: false,
+    is_featured: true,
     params: {
       slug: "note-app",
     },
   },
   {
-    id: 0,
+    id: 6,
     title: "todo-list",
     description:
       "This is a project todo list application that I created while studying at Dicoding Academy Indonesia. Where this todo list project can create unread and read notes and also has a what has been done and what has not been done.",
     slug: "todo-list-abbas",
     link_demo: "https://project-todo-list-v1.vercel.app/",
-    link_github: "hhttps://github.com/zidanabbas/todo-list",
+    link_github: "https://github.com/zidanabbas/todo-list",
     tech_stack: [
       {
         title: "React JS",
@@ -266,9 +285,50 @@ export const ProjectList = [
     image:
       "https://res.cloudinary.com/dlshk9mf6/image/upload/v1704360297/mobile_19_tfag4s.png",
     is_show: true,
-    is_featured: false,
+    is_featured: true,
     params: {
       slug: "todo-list",
+    },
+  },
+  {
+    id: 7,
+    title: "coffee-list",
+    description:
+      "coffee listing is a project that I created to display coffee menu data. Apart from that, it is also to practice my skills in slicing and retrieving data from public APIs.",
+    slug: "coffee-list",
+    link_demo: "https://coffeelisting.vercel.app/",
+    link_github: "https://github.com/zidanabbas/coffee-listing",
+    tech_stack: [
+      {
+        title: "React JS",
+        icon: <SiReact size={iconSize} className="text-purple-700" />,
+      },
+      {
+        title: "Vite",
+        icon: <SiVite size={iconSize} className="text-yellow-400" />,
+      },
+      {
+        title: "Javascript",
+        icon: <SiJavascript size={iconSize} className="text-yellow-400" />,
+      },
+      {
+        title: "Tailwind CSS",
+        icon: <SiTailwindcss size={iconSize} className="text-cyan-300" />,
+      },
+      {
+        title: "Vercel",
+        icon: <SiVercel size={iconSize} />,
+      },
+    ],
+
+    tooltip: ["React.Js", "Vite.js", "JavaScript", "Tailwind CSS", "Vercel"],
+    aos_delay: 800,
+    image:
+      "https://res.cloudinary.com/dlshk9mf6/image/upload/v1706502524/abbasImage/lg98wvvopimpio6ct0g6.png",
+    is_show: true,
+    is_featured: false,
+    params: {
+      slug: "coffee-list",
     },
   },
 ];
