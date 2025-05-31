@@ -34,18 +34,19 @@ export default function Career() {
                   <div className="bg-neutral-300 items-center dark:bg-neutral-600 rounded-full">
                     <Image
                       src={logo}
-                      alt=""
+                      alt={name}
                       width={70}
                       className="rounded-full"
                       height={70}
                     />
                   </div>
                   <div className="flex-col flex space-y-2">
-                    <h1> {profession}</h1>
+                    <h1>{profession}</h1>
                     <div className="flex items-center gap-1 md:gap-2 text-xs mt-1">
                       <Link
-                        href="https://www.instagram.com/iftaassociation/"
+                        href={link}
                         className="text-neutral-500 dark:text-neutral-400 underline underline-offset-2"
+                        target="_blank"
                       >
                         {name}
                       </Link>
