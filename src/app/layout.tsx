@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import Layouts from "@/app/components/Layouts.js";
 import SpotifyTop from "@/app/components/elements/SpotifyTop";
 import TopLoader from "@/app/components/elements/TopLoader";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const sora = Sora({
@@ -48,7 +49,9 @@ export default function RootLayout({
       <body className={sora.className}>
         <Providers>
           <SpotifyTop />
-          <TopLoader />
+          <Suspense fallback={null}>
+            <TopLoader />
+          </Suspense>
           <Layouts>{children}</Layouts>
         </Providers>
       </body>

@@ -4,7 +4,13 @@ import querystring from "querystring";
 
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const redirect_uri_dev = process.env.NEXT_PUBLIC_REDIRECT_URI_DEV;
+
+// Menggunakan NEXT_PUBLIC_BASE_URL dari next.config.js
+// Ini akan menjadi "http://localhost:3000" di dev, dan "https://abbasdev.vercel.app/" di prod
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; // Pastikan ini ada di .env Next.js
+
+// Bangun redirect_uri secara dinamis
+const redirect_uri = `${BASE_URL}/api/auth/spotify/callback`;
 
 export const dynamic = "force-dynamic";
 
@@ -20,9 +26,9 @@ export async function GET(request) {
   );
   console.log("[callback/route.js] Received State:", state);
   console.log(
-    "[callback/route.js] Using REDIRECT_URI_DEV for token exchange:",
-    redirect_uri_dev
-  ); // <-- Tambah ini
+    "[callback/route.js] Using CONSTRUCTED REDIRECT_URI for token exchange:", // Ubah log
+    redirect_uri // Gunakan redirect_uri yang baru
+  );
 
   if (code === null) {
     console.error(
@@ -36,20 +42,20 @@ export async function GET(request) {
 
   const requestBody = {
     code: code,
-    redirect_uri: redirect_uri_dev,
+    redirect_uri: redirect_uri, // Gunakan redirect_uri yang baru
     grant_type: "authorization_code",
   };
   console.log(
     "[callback/route.js] Token exchange request body (partial):",
     querystring.stringify(requestBody)
-  ); // <-- Log ini
+  );
 
   const authOptions = {
     method: "POST",
     headers: {
       Authorization:
         "Basic " +
-        Buffer.from(client_id + ":" + client_secret, "utf8").toString("base64"), // Pastikan utf8 di sini juga
+        Buffer.from(client_id + ":" + client_secret, "utf8").toString("base64"),
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: querystring.stringify(requestBody),
@@ -58,7 +64,7 @@ export async function GET(request) {
 
   try {
     const response = await fetch(
-      "https://accounts.spotify.com/api/token",
+      "https://accounts.spotify.com/api/token", // Endpoint Spotify OAuth
       authOptions
     );
     const data = await response.json();
@@ -72,9 +78,18 @@ export async function GET(request) {
       console.log("Refresh Token:", refresh_token);
       console.log("-------------------------------\n");
 
+      // Setelah proses debugging mendapatkan token selesai,
+      // Anda harus mengembalikan baris ini ke URL yang sederhana untuk keamanan.
+      // Untuk sementara, biarkan ini untuk mendapatkan token Vercel pertama kali:
       return NextResponse.redirect(
-        new URL(`/success-spotify-auth`, request.url)
+        new URL(
+          `/success-spotify-auth?refresh_token=${refresh_token}`,
+          request.url
+        )
       );
+      // Setelah mendapatkan token dan mengaturnya di Vercel Env Vars,
+      // ubah kembali menjadi:
+      // return NextResponse.redirect(new URL('/success-spotify-auth', request.url));
     } else {
       console.error(
         "[callback/route.js] Error exchanging code for tokens from Spotify:",

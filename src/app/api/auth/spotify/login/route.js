@@ -3,45 +3,53 @@ import { NextResponse } from "next/server";
 import querystring from "querystring";
 
 const client_id = process.env.SPOTIFY_CLIENT_ID;
-const redirect_uri_dev = process.env.NEXT_PUBLIC_REDIRECT_URI_DEV;
+
+// Menggunakan NEXT_PUBLIC_BASE_URL dari next.config.js
+// Ini akan menjadi "http://localhost:3000" di dev, dan "https://abbasdev.vercel.app/" di prod
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; // Pastikan ini ada di .env Next.js
+
+// Bangun redirect_uri secara dinamis
+const redirect_uri = `${BASE_URL}/api/auth/spotify/callback`;
+
+// Generate a random state string for security
+const generateRandomString = (length) => {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
+const state = generateRandomString(16);
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request) {
   console.log("[login/route.js] Login route accessed.");
   console.log(
     "[login/route.js] Loaded CLIENT_ID:",
     client_id ? client_id.substring(0, 5) + "..." : "N/A"
   );
-  console.log("[login/route.js] Loaded REDIRECT_URI_DEV:", redirect_uri_dev); // <-- Tambah ini
-
-  if (!client_id || !redirect_uri_dev) {
-    console.error(
-      "[login/route.js] Missing SPOTIFY_CLIENT_ID or NEXT_PUBLIC_REDIRECT_URI_DEV."
-    );
-    return NextResponse.json(
-      { error: "Server configuration error: Missing env vars." },
-      { status: 500 }
-    );
-  }
+  console.log("[login/route.js] Constructed REDIRECT_URI:", redirect_uri); // Log URI yang dikonstruksi
 
   const scope =
-    "user-read-currently-playing user-read-playback-state user-read-recently-played";
-  const state =
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
+    "user-read-playback-state user-read-currently-playing user-top-read user-read-recently-played";
 
-  const authUrl =
-    "https://accounts.spotify.com/authorize?" +
+  const spotifyAuthUrl =
+    "https://accounts.spotify.com/authorize?response_type=code&client_id=29e763c0250d4d41acfc93554d56287b&scope=user-read-currently-playing%20user-read-playback-state%20user-read-recently-played&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fspotify%2Fcallback&state=qtpp8fpkm2ouk7j3noony" +
     querystring.stringify({
-      // Pastikan ini benar
       response_type: "code",
       client_id: client_id,
       scope: scope,
-      redirect_uri: redirect_uri_dev, // <-- Ini yang akan di-encode
+      redirect_uri: redirect_uri, // Gunakan redirect_uri yang baru
       state: state,
     });
 
-  console.log("[login/route.js] FULL REDIRECT URL SENT TO SPOTIFY:", authUrl); // <-- Log URL lengkap ini
-  return NextResponse.redirect(authUrl);
+  console.log(
+    "[login/route.js] FULL REDIRECT URL SENT TO SPOTIFY:",
+    spotifyAuthUrl
+  );
+  return NextResponse.redirect(spotifyAuthUrl);
 }
