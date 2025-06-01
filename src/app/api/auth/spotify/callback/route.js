@@ -73,10 +73,7 @@ export async function GET(request) {
       console.log("-------------------------------\n");
 
       return NextResponse.redirect(
-        new URL(
-          `/success-spotify-auth?refresh_token=${refresh_token}`,
-          request.url
-        )
+        new URL(`/success-spotify-auth`, request.url)
       );
     } else {
       console.error(
