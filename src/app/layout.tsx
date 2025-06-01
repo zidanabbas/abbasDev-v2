@@ -13,6 +13,10 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    "https://abbasdev.vercel.app/",
+    "https://abbasdev.vercel.app/"
+  ),
   title: "Home | Zidane Abbas",
   description: "Personal Website, Portofolio, roadMap and More",
   keywords: "Zidane Abbas, zdnabbs, zidaneabbs, portofolio abbas",
@@ -40,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" suppressHydrationWarning>
       <body className={sora.className}>
         <Providers>
           <SpotifyTop />

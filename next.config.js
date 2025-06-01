@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com", "i.scdn.co"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
+        pathname: "/**",
+      },
+    ],
   },
   env: {
     // Tambahkan URL produksi atau URL yang sesuai dengan kebutuhan kamu

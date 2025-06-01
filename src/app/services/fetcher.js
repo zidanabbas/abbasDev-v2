@@ -1,9 +1,11 @@
-const axios = require("axios");
+import useSWR from "swr";
 
-export const fetcher = (url) => {
-  axios.get(url).then((res) => {
-    res.data;
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export const useGetDataSpotify = () => {
+  const { data, error, isLoading } = useSWR("/api/spotify", fetcher, {
+    refreshInterval: 60000, // refresh setiap 60 detik
   });
-};
 
-console.log(fetcher("/api/spotify"));
+  return { data, error, isLoading };
+};

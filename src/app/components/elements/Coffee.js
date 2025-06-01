@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { BiCoffee } from "react-icons/bi";
 import React from "react";
