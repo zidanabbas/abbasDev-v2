@@ -1,31 +1,26 @@
-import { getAccessToken, getPlaylist } from "@/app/lib/spotify";
-
+// src/app/api/playlistSpotify/route.js
+// File ini saat ini tidak digunakan oleh SpotifyCard.js.
+// Jika Anda bermaksud menggunakannya, Anda perlu mengimplementasikan fungsi getPlaylist
+// di lib/spotify.js dan mungkin meneruskan ID playlist.
+import { getAccessToken } from "../../lib/spotify";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   const accessToken = await getAccessToken();
-  const playlist = await getPlaylist(accessToken);
 
-  if (!accessToken)
+  if (!accessToken) {
     return NextResponse.json(
-      {
-        error: "Error fetching access_token from Spotify",
-      },
+      { error: "Error fetching access_token from Spotify" },
       { status: 500 }
     );
+  }
 
-  if (playlist)
-    return NextResponse.json({
-      name: playlist.name,
-      id: playlist.id,
-    });
-
+  // Untuk saat ini, rute ini hanya mengembalikan pesan sukses jika access token berhasil didapatkan.
+  // Anda dapat memodifikasi ini jika Anda ingin menggunakannya untuk mengambil detail playlist tertentu.
   return NextResponse.json(
-    {
-      error: "Error fetching data from Spotify",
-    },
-    { status: 500 }
+    { message: "Access token obtained successfully", accessToken: accessToken },
+    { status: 200 }
   );
 }

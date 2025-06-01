@@ -1,169 +1,97 @@
-"use server";
+// src/app/lib/spotify.js
+const client_id = process.env.SPOTIFY_CLIENT_ID;
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
-export const getAccessToken = async () => {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+console.log(
+  "[spotify.js] Loaded CLIENT_ID:",
+  client_id ? client_id.substring(0, 5) + "..." : "N/A"
+);
+console.log(
+  "[spotify.js] Loaded CLIENT_SECRET:",
+  client_secret ? client_secret.substring(0, 5) + "..." : "N/A"
+);
+console.log(
+  "[spotify.js] Loaded REFRESH_TOKEN (partial):",
+  refresh_token ? refresh_token.substring(0, 10) + "..." : "N/A"
+);
 
-  const urlencoded = new URLSearchParams();
-  urlencoded.append("client_id", process.env.NEXT_PUBLIC_CLIENT_ID_SPOTIFY);
-  urlencoded.append(
-    "client_secret",
-    process.env.NEXT_PUBLIC_CLIENT_SECRET_SPOTIFY
-  );
-  urlencoded.append("grant_type", "refresh_token");
-  urlencoded.append(
-    "refresh_token",
-    process.env.NEXT_PUBLIC_REFRESH_TOKEN_SPOTIFY
-  );
+const basic = Buffer.from(`${client_id}:${client_secret}`, "utf8").toString(
+  "base64"
+);
 
-  const requestOptions = {
+const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
+const NOW_PLAYING_ENDPOINT =
+  "https://api.spotify.com/v1/me/player/currently-playing";
+
+export async function getAccessToken() {
+  console.log("[spotify.js] getAccessToken called.");
+  const res = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
-    headers: myHeaders,
-    body: urlencoded,
-    next: { revalidate: 3600 },
-  };
+    headers: {
+      Authorization: `Basic ${basic}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token,
+    }),
+  });
 
-  try {
-    const response = await fetch(
-      "https://accounts.spotify.com/api/token",
-      requestOptions
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error(
+      "[spotify.js] Error fetching access token:",
+      res.status,
+      errorText,
+      "Request Body:",
+      new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token,
+      }).toString() // Log body
     );
-    const data = await response.json();
-    return data.access_token;
-  } catch (error) {
-    console.error("Error fetching access token:", error);
     return null;
   }
-};
 
-export async function getCurrentTrack(accessToken) {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    next: { revalidate: 0 },
-  };
-
-  try {
-    const response = await fetch(
-      "https://api.spotify.com/v1/me/player/currently-playing",
-      requestOptions
-    );
-    const data = await response.json();
-    return data || null;
-  } catch (err) {
-    console.error("Error fetching current track:", err);
-    return null;
-  }
+  const data = await res.json();
+  console.log("[spotify.js] Access Token obtained successfully.");
+  return data.access_token;
 }
 
-export async function getLastPlayedTrack(accessToken) {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}}`);
+export async function getNowPlaying() {
+  console.log("[spotify.js] getNowPlaying called.");
+  const access_token = await getAccessToken();
+  console.log("akses token nih : ", access_token);
 
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    next: { revalidate: 60 },
-  };
-
-  try {
-    const response = await fetch(
-      "https://api.spotify.com/v1/me/player/recently-played",
-      requestOptions
+  if (!access_token) {
+    console.log(
+      "[spotify.js] No access token, returning null from getNowPlaying."
     );
-
-    const data = await response.json();
-    return data ? data : null;
-  } catch (err) {
     return null;
   }
-}
 
-export async function getTrack(accessToken, id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}}`);
+  const res = await fetch(NOW_PLAYING_ENDPOINT, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    cache: "no-store",
+  });
 
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    next: { revalidate: 60 },
-  };
+  if (res.status === 204) {
+    console.log("[spotify.js] 204 No Content - No song currently playing.");
+    return null;
+  }
 
-  try {
-    const response = await fetch(
-      `https://api.spotify.com/v1/tracks/${id}`,
-      requestOptions
+  if (res.status > 400) {
+    console.error(
+      "[spotify.js] Error fetching now playing (Spotify API error):",
+      res.status,
+      await res.text()
     );
-
-    const data = await response.json();
-    return data ? data : null;
-  } catch (err) {
     return null;
   }
-}
 
-export async function getTopTracks(accessToken) {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}}`);
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    next: { revalidate: 60 },
-  };
-
-  try {
-    const response = await fetch(
-      "https://api.spotify.com/v1/me/top/tracks?limit=5",
-      requestOptions
-    );
-
-    const data = await response.json();
-    return data ? data : null;
-  } catch (err) {
-    return null;
-  }
-}
-
-export async function getPlaylist(accessToken, playlist_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}}`);
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    next: { revalidate: 60 },
-  };
-
-  try {
-    const response = await fetch(`${playlist_id}`, requestOptions);
-
-    const data = await response.json();
-    return data ? data : null;
-  } catch (err) {
-    return null;
-  }
-}
-
-export async function getAlbumDetails(accessToken, album_id) {
-  const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}}`);
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    next: { revalidate: 60 },
-  };
-
-  try {
-    const response = await fetch(`${album_id}`, requestOptions);
-
-    const data = await response.json();
-    return data ? data : null;
-  } catch (err) {
-    return null;
-  }
+  const data = await res.json();
+  console.log("[spotify.js] Now Playing data received.");
+  return data;
 }

@@ -1,3 +1,4 @@
+"use client";
 import { Tooltip } from "@nextui-org/react";
 
 export default function SkillCard({ name, icon }) {
