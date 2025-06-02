@@ -1,67 +1,48 @@
 import { NextResponse } from "next/server";
-import cloudinary from "../../lib/cloudinary";
-import prisma from "../../lib/prisma";
-import formidable from "formidable";
-import fs from "fs";
-
-// Disable Next.js built-in body parser supaya formidable bisa parse form-data
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+import cloudinary from "../../lib/cloudinary.js"; // Pastikan path ini benar
 
 export async function POST(req) {
-  return new Promise((resolve, reject) => {
-    const form = new formidable.IncomingForm({ multiples: false });
+  try {
+    // 1. Dapatkan FormData dari request menggunakan Web API
+    const formData = await req.formData();
 
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error("Form parse error:", err);
-        resolve(
-          NextResponse.json(
-            { error: "Failed to parse form data" },
-            { status: 500 }
-          )
-        );
-        return;
-      }
+    // 2. Ambil file dari FormData. 'image' harus sesuai dengan nama input di frontend
+    const file = formData.get("image");
 
-      const file = files.image; // key 'image' harus sesuai frontend upload
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
 
-      if (!file) {
-        resolve(
-          NextResponse.json({ error: "No file uploaded" }, { status: 400 })
-        );
-        return;
-      }
+    // 3. Konversi File object (Blob) menjadi Buffer
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-      try {
-        // Upload file ke Cloudinary via local filepath
-        const result = await cloudinary.uploader.upload(file.filepath, {
-          folder: "abbas-gallery",
-        });
-
-        // Hapus file lokal setelah upload sukses
-        fs.unlinkSync(file.filepath);
-
-        // Simpan URL ke Neon lewat Prisma
-        const savedImage = await prisma.image.create({
-          data: {
-            imageUrl: result.secure_url,
-          },
-        });
-
-        resolve(
-          NextResponse.json(
-            { message: "Upload success", data: savedImage },
-            { status: 200 }
-          )
-        );
-      } catch (uploadError) {
-        console.error("Upload error:", uploadError);
-        resolve(NextResponse.json({ error: "Upload failed" }, { status: 500 }));
-      }
+    // 4. Upload Buffer ke Cloudinary menggunakan upload_stream
+    const result = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          { folder: "abbas-gallery" }, // Folder di Cloudinary
+          (error, uploadResult) => {
+            if (error) {
+              console.error("Cloudinary upload error:", error);
+              return reject(new Error("Cloudinary upload failed"));
+            }
+            resolve(uploadResult);
+          }
+        )
+        .end(buffer); // Mengunggah buffer langsung
     });
-  });
+
+    // 5. Kembalikan URL gambar ke frontend
+    return NextResponse.json(
+      { message: "Upload success", imageUrl: result.secure_url },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("General upload error:", error);
+    return NextResponse.json(
+      { error: `An unexpected error occurred: ${error.message}` },
+      { status: 500 }
+    );
+  }
 }
