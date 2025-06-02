@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -21,9 +20,10 @@ model Certificate {
 }
 
 model Career {
-  id         String @id @default(cuid())
+  id         String  @id @default(cuid())
   name       String
   logo       String
+  link       String?
   location   String
   date       String
   during     String

@@ -1,5 +1,5 @@
 "use client";
-import useIsMobile from "@/app/components/hooks/useIsMobile";
+import useIsMobile from "@/components/hooks/useIsMobile";
 import { Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";

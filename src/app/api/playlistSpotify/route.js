@@ -2,7 +2,7 @@
 // File ini saat ini tidak digunakan oleh SpotifyCard.js.
 // Jika Anda bermaksud menggunakannya, Anda perlu mengimplementasikan fungsi getPlaylist
 // di lib/spotify.js dan mungkin meneruskan ID playlist.
-import { getAccessToken } from "../../lib/spotify";
+import { getAccessToken } from "../../../lib/spotify";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";

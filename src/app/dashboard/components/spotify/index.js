@@ -1,7 +1,7 @@
 import React from "react";
 import { BiLogoSpotify } from "react-icons/bi";
-import SubHeading from "@/app/components/elements/SubHeading";
-import Heading from "@/app/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
+import Heading from "@/components/elements/Heading";
 import SpotifyCard from "../SpotifyCard";
 
 export default function Spotify() {

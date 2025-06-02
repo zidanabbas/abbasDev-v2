@@ -1,5 +1,5 @@
-import Coffee from "@/app/components/elements/Coffee.js";
-import CurriculumVitae from "@/app/components/elements/CurriculumVitae.js";
+import Coffee from "@/components/elements/Coffee.js";
+import CurriculumVitae from "@/components/elements/CurriculumVitae.js";
 
 export default function HeaderHome() {
   return (

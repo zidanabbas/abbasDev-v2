@@ -1,13 +1,13 @@
 "use client";
 
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
 import React, { useState, useEffect } from "react";
 import { BiLogoGithub } from "react-icons/bi";
 import Link from "next/link";
 import { Tooltip } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import useHasMounted from "@/components/hooks/useHasMounted";
 import GitHubCalendar from "react-github-calendar";
 
 function GithubHeader() {

@@ -1,9 +1,9 @@
 "use client";
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import useHasMounted from "@/components/hooks/useHasMounted";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Edulist } from "../../components/dataDummy/Edulist";
+import { Edulist } from "../../../components/dataDummy/Edulist";
 
 export default function EducationCard() {
   const mounted = useHasMounted();
@@ -23,7 +23,15 @@ export default function EducationCard() {
               transition={{ duration: 0.5, delay: 0.5 }}
               className=""
             >
-              <Image src={item.logo} width={60} height={60} alt={item.title} />
+              <div style={{ position: "relative", width: 60, height: 60 }}>
+                <Image
+                  src={item.logo}
+                  fill
+                  alt={item.title}
+                  style={{ objectFit: "contain" }}
+                  sizes="60px"
+                />
+              </div>
             </motion.div>
             <div className="flex flex-col space-y-2">
               <Link

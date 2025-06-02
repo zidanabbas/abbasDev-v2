@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { ProgressLists } from "@/app/components/dataDummy/ProgressList";
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import { ProgressLists } from "@/components/dataDummy/ProgressList";
+import useHasMounted from "@/components/hooks/useHasMounted";
 
 function ProgressCard() {
   const hasMounted = useHasMounted();

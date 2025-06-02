@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import useHasMounted from "@/app/components/hooks/useHasMounted.js";
+import useHasMounted from "@/components/hooks/useHasMounted.js";
 
 export default function Status() {
   const { resolvedTheme } = useTheme();

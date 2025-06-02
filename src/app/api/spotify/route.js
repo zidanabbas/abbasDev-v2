@@ -1,6 +1,6 @@
 // src/app/api/spotify/route.js
 import { NextResponse } from "next/server";
-import { getNowPlaying } from "../../lib/spotify.js";
+import { getNowPlaying } from "../../../lib/spotify.js";
 
 export const dynamic = "force-dynamic"; // Memastikan rute ini selalu dijalankan secara dinamis
 

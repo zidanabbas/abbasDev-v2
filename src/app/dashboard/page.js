@@ -1,6 +1,6 @@
 import React from "react";
-import ContainerAOS from "@/app/components/elements/ContainerAOS";
-import DashedDivider from "@/app/components/elements/DashedDivider";
+import ContainerAOS from "@/components/elements/ContainerAOS";
+import DashedDivider from "@/components/elements/DashedDivider";
 import { Divider } from "@nextui-org/react";
 import Header from "../dashboard/components/Header";
 import GithubHeader from "../dashboard/components/GithubHeader";

@@ -1,9 +1,9 @@
 "use client";
 
-import BackButton from "@/app/components/elements/BackButton";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
-import { CertificatesList } from "@/app/components/dataDummy/CertificatesList.js";
+import BackButton from "@/components/elements/BackButton";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
+import { CertificatesList } from "@/components/dataDummy/CertificatesList.js";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 

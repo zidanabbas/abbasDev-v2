@@ -1,11 +1,11 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ProjectList } from "@/app/components/dataDummy/ProjectList";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
-import BackButton from "@/app/components/elements/BackButton";
-import DashedDivider from "@/app/components/elements/DashedDivider";
+import { ProjectList } from "@/components/dataDummy/ProjectList";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
+import BackButton from "@/components/elements/BackButton";
+import DashedDivider from "@/components/elements/DashedDivider";
 import { SiGithub } from "react-icons/si";
 import { BiLinkExternal } from "react-icons/bi";
 import Link from "next/link";

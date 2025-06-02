@@ -1,8 +1,8 @@
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
 import { BiBarcode } from "react-icons/bi";
 import CertificatesCard from "@/app/about/components/CertificatesCard";
-import { CertificatesList } from "@/app/components/dataDummy/CertificatesList";
+import { CertificatesList } from "@/components/dataDummy/CertificatesList";
 
 export default function Certificates() {
   return (

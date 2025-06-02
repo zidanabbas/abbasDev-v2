@@ -1,5 +1,5 @@
 "use client";
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import useHasMounted from "@/components/hooks/useHasMounted";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
