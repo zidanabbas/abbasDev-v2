@@ -1,9 +1,9 @@
 "use client";
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import useHasMounted from "@/components/hooks/useHasMounted";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Edulist } from "../../components/dataDummy/Edulist";
+import { Edulist } from "../../../components/dataDummy/Edulist";
 
 export default function EducationCard() {
   const mounted = useHasMounted();

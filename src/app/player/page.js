@@ -1,7 +1,7 @@
 import React from "react";
-import DashedDivider from "@/app/components/elements/DashedDivider";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
+import DashedDivider from "@/components/elements/DashedDivider";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
 
 export default function Page() {
   return (

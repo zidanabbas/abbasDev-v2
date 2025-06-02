@@ -1,5 +1,5 @@
 import React from "react";
-import ContainerAOS from "@/app/components/elements/ContainerAOS";
+import ContainerAOS from "@/components/elements/ContainerAOS";
 import RoadmapPage from "@/app/roadmap/components/Roadmap";
 export const metadata = {
   title: "Roadmap | Abbas",

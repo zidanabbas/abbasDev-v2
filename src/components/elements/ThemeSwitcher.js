@@ -2,7 +2,7 @@
 import { BsCloudMoon, BsCloudSun } from "react-icons/bs";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import useHasMounted from "@/app/components/hooks/useHasMounted.js";
+import useHasMounted from "@/components/hooks/useHasMounted.js";
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();

@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Sora } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import Layouts from "@/app/components/Layouts.js";
-import SpotifyTop from "@/app/components/elements/SpotifyTop";
-import TopLoader from "@/app/components/elements/TopLoader";
+import Layouts from "@/components/Layouts.js";
+import SpotifyTop from "@/components/elements/SpotifyTop";
+import TopLoader from "@/components/elements/TopLoader";
 import { Suspense } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
 const sora = Sora({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
@@ -18,20 +17,29 @@ export const metadata: Metadata = {
     "https://abbasdev.vercel.app/",
     "https://abbasdev.vercel.app/"
   ),
-  title: "Home | Zidane Abbas",
-  description: "Personal Website, Portofolio, roadMap and More",
-  keywords: "Zidane Abbas, zdnabbs, zidaneabbs, portofolio abbas",
+  title: "Zidane Abbas | Frontend Developer",
+  description:
+    "Website pribadi Zidane Abbas, Web Developer spesialis Frontend (React, Tailwind, Next.js)e",
+  keywords: [
+    "Zidane Abbas",
+    "Zidane Abbas Panjaitan",
+    "Abbas Dev",
+    "Frontend Developer",
+    "React Developer",
+    "Web Developer Tangerang Selatan",
+  ],
   creator: "Zidane Abbas",
   openGraph: {
     title: "Zidane Abbas - Personal website",
-    description: "Personal Website, Portofolio, roadMap and More",
+    description: "Profil pribadi dan portfolio Abbas Dev.",
     url: "https://abbasdev.vercel.app/",
-    siteName: "zdnabbs",
+    siteName: "abbas dev",
     images: [
       {
-        url: "https://res.cloudinary.com/dlshk9mf6/image/upload/c_crop,g_face,h_1400,w_1400/abbasImage/ywo8qfhriij23ya8refa.jpg",
+        url: "https://res.cloudinary.com/dlshk9mf6/image/upload/v1748840542/abbas-gallery/foto-profil.jpg",
         width: 1200,
         height: 630,
+        alt: "Zidane Abbas",
       },
     ],
     locale: "id-ID",

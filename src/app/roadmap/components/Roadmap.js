@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import DashedDivider from "@/app/components/elements/DashedDivider";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
-import useIsMobile from "@/app/components/hooks/useIsMobile";
+import DashedDivider from "@/components/elements/DashedDivider";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
+import useIsMobile from "@/components/hooks/useIsMobile";
 import CourseList from "./CourseList";
 
 function RoadmapPage() {

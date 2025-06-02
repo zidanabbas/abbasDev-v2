@@ -1,12 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import CourseCard from "./CourseCard";
-import {
-  FRONTEND,
-  MASTERING_REACT,
-} from "@/app/components/dataDummy/RoadmapList";
+import { FRONTEND, MASTERING_REACT } from "@/components/dataDummy/RoadmapList";
 import { motion } from "framer-motion";
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import useHasMounted from "@/components/hooks/useHasMounted";
 
 function CourseList() {
   const [open, setOpen] = useState(1);

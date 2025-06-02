@@ -1,4 +1,4 @@
-import ContainerAOS from "@/app/components/elements/ContainerAOS";
+import ContainerAOS from "@/components/elements/ContainerAOS";
 import ProjectsLists from "./components/ProjectList";
 
 export const metadata = {

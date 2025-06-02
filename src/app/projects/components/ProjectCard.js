@@ -1,6 +1,6 @@
 "use client";
 
-import useHasMounted from "@/app/components/hooks/useHasMounted";
+import useHasMounted from "@/components/hooks/useHasMounted";
 import { BiPin, BiRightArrowAlt } from "react-icons/bi";
 import { motion } from "framer-motion";
 import Image from "next/image";

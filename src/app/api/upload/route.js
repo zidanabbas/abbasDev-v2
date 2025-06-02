@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import cloudinary from "../../lib/cloudinary.js"; // Pastikan path ini benar
+import cloudinary from "../../../lib/cloudinary.js"; // Pastikan path ini benar
 
 export async function POST(req) {
   try {

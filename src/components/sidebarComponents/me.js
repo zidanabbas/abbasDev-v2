@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import Verified from "@/app/components/elements/Verified.js";
-import Status from "@/app/components/elements/Status.js";
-import useHasMounted from "@/app/components/hooks/useHasMounted.js";
+import Verified from "@/components/elements/Verified.js";
+import Status from "@/components/elements/Status.js";
+import useHasMounted from "@/components/hooks/useHasMounted.js";
 
 export default function Me({ activeProps }) {
   const mounted = useHasMounted();

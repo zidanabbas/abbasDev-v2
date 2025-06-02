@@ -1,9 +1,9 @@
 import { BiBriefcaseAlt2 } from "react-icons/bi";
-import Heading from "@/app/components/elements/Heading.js";
-import SubHeading from "@/app/components/elements/SubHeading.js";
+import Heading from "@/components/elements/Heading.js";
+import SubHeading from "@/components/elements/SubHeading.js";
 import Link from "next/link";
 import Image from "next/image";
-import { CareerLists } from "@/app/components/dataDummy/CareerLists.js";
+import { CareerLists } from "@/components/dataDummy/CareerLists.js";
 
 export default function Career() {
   return (

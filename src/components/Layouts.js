@@ -1,5 +1,5 @@
 import Sidebar from "./sidebar.js";
-import Container from "@/app/components/elements/Container.js";
+import Container from "@/components/elements/Container.js";
 
 export default function Layouts({ children }) {
   return (

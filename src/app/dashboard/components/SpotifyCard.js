@@ -7,7 +7,7 @@ import { BiLogoSpotify } from "react-icons/bi";
 // import useSWR from "swr"; // Hapus impor ini jika Anda ingin menggunakan useGetDataSpotify
 
 // Impor useGetDataSpotify dari services/fetcher.js
-import { useGetDataSpotify } from "../../services/fetcher.js"; // Sesuaikan path jika berbeda
+import { useGetDataSpotify } from "../../../services/fetcher.js"; // Sesuaikan path jika berbeda
 
 export default function SpotifyCard() {
   // Menggunakan useGetDataSpotify custom hook dari services/fetcher.js

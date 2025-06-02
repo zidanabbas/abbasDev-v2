@@ -1,8 +1,8 @@
 import { HiCode } from "react-icons/hi";
 import SkillCard from "@/app/home/components/SkillCard";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
-import { Stacks } from "@/app/components/dataDummy/Stacks";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
+import { Stacks } from "@/components/dataDummy/Stacks";
 export default function SkillList() {
   return (
     <section className="space-y-6">

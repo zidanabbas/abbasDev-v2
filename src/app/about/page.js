@@ -1,4 +1,4 @@
-import ContainerAOS from "@/app/components/elements/ContainerAOS.js";
+import ContainerAOS from "@/components/elements/ContainerAOS.js";
 import { Divider } from "@nextui-org/react";
 import Header from "./components/Header";
 import Certificates from "@/app/about/components/Certificates.js";

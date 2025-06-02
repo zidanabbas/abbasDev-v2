@@ -1,6 +1,6 @@
 import React from "react";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
 import { BiTimeFive } from "react-icons/bi";
 import Progress from "./Progress";
 

@@ -1,11 +1,11 @@
 "use client";
 import ProjectCard from "./ProjectCard";
-import DashedDivider from "@/app/components/elements/DashedDivider";
-import Heading from "@/app/components/elements/Heading";
-import SubHeading from "@/app/components/elements/SubHeading";
+import DashedDivider from "@/components/elements/DashedDivider";
+import Heading from "@/components/elements/Heading";
+import SubHeading from "@/components/elements/SubHeading";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { ProjectList } from "@/app/components/dataDummy/ProjectList";
+import { ProjectList } from "@/components/dataDummy/ProjectList";
 
 const LazyprojectCard = dynamic(() => import("./ProjectCard"));
 
