@@ -17,7 +17,7 @@ export default function Me({ activeProps }) {
           <Status />
           <div className="dark:brightness-50 brightness-[0.96] relative w-full h-24 overflow-hidden rounded-xl">
             <Image
-              src="https://res.cloudinary.com/dxgsqxdi3/image/upload/c_crop,g_auto,h_600,w_800/e_contrast:55/e_brightness:-9/e_gamma:150/e_gamma:127/qsngd6wxb7ywt9jrwni8.jpg"
+              src="https://res.cloudinary.com/dlshk9mf6/image/upload/v1748841208/abbas-gallery/bg-wave.jpg"
               width={640}
               height={480}
               alt="bgprofile"
@@ -45,7 +45,7 @@ export default function Me({ activeProps }) {
               className="rounded-full overflow-hidden "
             >
               <Image
-                src="https://res.cloudinary.com/dlshk9mf6/image/upload/c_crop,g_face,h_1400,w_1400/abbasImage/ywo8qfhriij23ya8refa.jpg"
+                src="https://res.cloudinary.com/dlshk9mf6/image/upload/v1748840542/abbas-gallery/foto-profil.jpg"
                 loading="lazy"
                 width={90}
                 height={90}
@@ -57,12 +57,12 @@ export default function Me({ activeProps }) {
             </motion.div>
           </motion.div>
           <div className="md:mt-4 mt-2 text-xl font-semibold flex justify-center items-center gap-2">
-            <h1 className="md:text-xl text-lg">Zidane Abbas</h1>
+            <h1 className="md:text-xl text-lg">zidane abbas</h1>
             <Verified />
           </div>
 
           <p className="text-sm text-neutral-700 dark:text-neutral-500 hidden md:flex">
-            @zidaneabbs
+            @hi.abbas
           </p>
         </div>
       </div>
