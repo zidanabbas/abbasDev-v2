@@ -4,7 +4,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BiLogoSpotify } from "react-icons/bi";
-// import useSWR from "swr"; // Hapus impor ini jika Anda ingin menggunakan useGetDataSpotify
 
 // Impor useGetDataSpotify dari services/fetcher.js
 import { useGetDataSpotify } from "../../../services/fetcher.js"; // Sesuaikan path jika berbeda
@@ -12,10 +11,6 @@ import { useGetDataSpotify } from "../../../services/fetcher.js"; // Sesuaikan p
 export default function SpotifyCard() {
   // Menggunakan useGetDataSpotify custom hook dari services/fetcher.js
   const { data, error, isLoading } = useGetDataSpotify();
-
-  console.log("Spotify Data:", data);
-  console.log("Spotify Error:", error);
-  console.log("Spotify Loading:", isLoading);
 
   // State Loading
   if (isLoading)
