@@ -103,6 +103,7 @@ export async function PUT(req, { params }) {
   }
 }
 
+// Delete: Hapus certificate berdasarkan ID
 export async function DELETE(req, { params }) {
   const { id } = params;
   try {

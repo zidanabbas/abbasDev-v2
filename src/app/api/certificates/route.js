@@ -20,6 +20,7 @@ export async function GET() {
   }
 }
 
+// POST: tambah data sertifikat
 export async function POST(req) {
   try {
     const body = await req.json();
