@@ -14,28 +14,13 @@ export default function Header() {
         </div>
         <div className="border-b border-dashed border-neutral-600 dark:border-neutral-500"></div>
         <p className="font-light text-md leading-7">
-          Hi, my name is Zidane Abbas, also known as Abbas, is an aspiring
-          front-end developer with just one month of experience. He has shown
-          dedication and a keen ability to master various web frameworks.
-          Abbas's journey began with a solid foundation in HTML, CSS, and
-          JavaScript, enabling him to create basic web pages and delve into
-          popular frameworks like TailwindCSS, React, Next Js.
-        </p>
-        <p className="font-light text-md leading-7">
-          What distinguishes Abbas is his quick adaptability to new challenges,
-          making him a promising front-end developer. Despite his limited
-          experience, he actively seeks resources and tutorials to stay
-          up-to-date with web development's evolving landscape. Abbas's
-          dedication and versatility mark him as a valuable addition to any web
-          development team, and his journey has just begun. He's on the path to
-          becoming a skilled professional adept at using a wide range of web
-          frameworks.
-        </p>
-        <p className="font-light text-md leading-7">
-          I stay current with industry trends and best practices to provide
-          innovative solutions that surpass company expectations. My strong
-          problem-solving skills and attention to detail drive innovation in
-          every project I handle.
+          A proactive Front-End Developer with over 1 year of professional
+          experience in web development, focusing on building responsive and
+          performant applications. Skilled in using modern tools and frameworks
+          including React.js, Next.js, Tailwind CSS, TypeScript, and Node.js.
+          Adept at designing scalable web solutions and integrating third-party
+          APIs. Proven ability to deliver projects both independently and as
+          part of a team
         </p>
       </div>
     </>
