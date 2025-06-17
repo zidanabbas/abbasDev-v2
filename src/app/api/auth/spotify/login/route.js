@@ -1,17 +1,12 @@
-// src/app/api/auth/spotify/login/route.js
 import { NextResponse } from "next/server";
 import querystring from "querystring";
 
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 
-// Menggunakan NEXT_PUBLIC_BASE_URL dari next.config.js
-// Ini akan menjadi "http://localhost:3000" di dev, dan "https://abbasdev.vercel.app/" di prod
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; // Pastikan ini ada di .env Next.js
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-// Bangun redirect_uri secara dinamis
 const redirect_uri = `${BASE_URL}/api/auth/spotify/callback`;
 
-// Generate a random state string for security
 const generateRandomString = (length) => {
   let text = "";
   const possible =
@@ -32,7 +27,7 @@ export async function GET(request) {
     "[login/route.js] Loaded CLIENT_ID:",
     client_id ? client_id.substring(0, 5) + "..." : "N/A"
   );
-  console.log("[login/route.js] Constructed REDIRECT_URI:", redirect_uri); // Log URI yang dikonstruksi
+  console.log("[login/route.js] Constructed REDIRECT_URI:", redirect_uri);
 
   const scope =
     "user-read-playback-state user-read-currently-playing user-top-read user-read-recently-played";
@@ -43,7 +38,7 @@ export async function GET(request) {
       response_type: "code",
       client_id: client_id,
       scope: scope,
-      redirect_uri: redirect_uri, // Gunakan redirect_uri yang baru
+      redirect_uri: redirect_uri,
       state: state,
     });
 

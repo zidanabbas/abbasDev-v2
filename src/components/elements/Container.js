@@ -8,6 +8,6 @@ export default function Container({ children }) {
     AOS.init({ duration: 800, delay: 50 });
   }, []);
   return (
-    <div className="mb-10 md:mt-14 mt-20 py-4 md:px-4 px-8">{children}</div>
+    <div className="mb-10 md:mt-14 mt-4 py-2 md:px-4 px-8">{children}</div>
   );
 }

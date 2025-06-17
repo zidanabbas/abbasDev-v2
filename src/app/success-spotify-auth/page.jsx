@@ -1,5 +1,4 @@
-// src/app/success-spotify-auth/page.js
-"use client"; // Masih perlu 'use client' jika ada interaksi klien
+"use client";
 
 import Link from "next/link";
 

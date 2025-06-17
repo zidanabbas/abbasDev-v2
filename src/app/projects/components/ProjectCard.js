@@ -5,22 +5,24 @@ import { BiPin, BiRightArrowAlt } from "react-icons/bi";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { iconMapper } from "@/components/utils/iconMapper"; // Pastikan path ini benar
 
-export default function ProjectsCards({
+export default function ProjectCard({
   is_featured,
   slug,
   image,
   title,
   description,
-  tech_stack,
+  tech_stack, // Ini adalah array objek tech stack dari API
   tooltip,
-  Index,
+  Index, // Index mungkin tidak diperlukan jika Anda menggunakan project.id untuk key di parent
 }) {
   const mounted = useHasMounted();
   if (!mounted) return null;
 
   return (
     <div>
+      {/* Menggunakan key Index untuk Link mungkin tidak ideal, tapi ini hanya sebuah container */}
       <Link key={Index} href={`/projects/${slug}`}>
         <div className="rounded-xl transition-all duration-300 shadow-sm lg:hover:shadow-md relative border dark:bg-neutral-800 border-neutral-200 dark:border-neutral-800 lg:hover:scale-[102%] h-full cursor-pointer group">
           {is_featured && (
@@ -56,9 +58,19 @@ export default function ProjectsCards({
               <h1 className="text-xl group-hover:text-teal-500">{title}</h1>
               <p className="line-clamp-2 text-sm">{description}</p>
               <div className="flex gap-2 pt-2">
-                {tech_stack.map((children) => {
-                  return <>{children.icon}</>;
-                })}
+                {/* PERBAIKAN 1: Gunakan tech.id sebagai key yang unik dan stabil */}
+                {/* PERBAIKAN 2: Gunakan tech.iconName untuk memetakan ke komponen ikon */}
+                {tech_stack?.map(
+                  (
+                    tech // Gunakan 'tech' sebagai nama parameter
+                  ) => (
+                    <span key={tech.id}>
+                      {" "}
+                      {/* Menggunakan tech.id sebagai key */}
+                      {iconMapper[tech.iconName] || <span>{tech.title}</span>}
+                    </span>
+                  )
+                )}
               </div>
             </div>
           </div>

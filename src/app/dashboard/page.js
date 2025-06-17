@@ -23,7 +23,7 @@ export default function Dashboard() {
       <ContainerAOS>
         <div className="h-full">
           <Header />
-          <DashedDivider className={"my-6"} />
+          <DashedDivider />
           <Stats />
           <Divider className="my-6" />
           <GithubHeader />
