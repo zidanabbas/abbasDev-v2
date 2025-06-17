@@ -1,3 +1,5 @@
+// schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,7 +22,7 @@ model Certificate {
 }
 
 model Career {
-  id         String  @id @default(cuid())
+  id         String   @id @default(cuid())
   name       String
   logo       String
   link       String?
@@ -28,10 +30,12 @@ model Career {
   date       String
   during     String
   profession String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Project {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(cuid())
   title       String
   description String
   slug        String  @unique
@@ -59,14 +63,28 @@ model TechStack {
 
 model ProjectTechStack {
   id          String    @id @default(cuid())
-  project     Project   @relation(fields: [projectId], references: [id])
-  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
   techStack   TechStack @relation(fields: [techStackId], references: [id])
   techStackId String
 
   @@unique([projectId, techStackId])
   @@index([projectId])
   @@index([techStackId])
+}
+
+// Model Education BARU, berdasarkan dummy data Anda
+model Education {
+  id        String   @id @default(cuid())
+  title     String
+  logo      String
+  href      String?
+  year      String
+  school    String
+  gtw       String?
+  jurusan   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum IconType {
