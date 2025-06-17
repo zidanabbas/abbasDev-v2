@@ -2,6 +2,7 @@ import Link from "next/link";
 import Heading from "@/components/elements/Heading";
 import SubHeading from "@/components/elements/SubHeading";
 import { BiRocket } from "react-icons/bi";
+import Button from "@/components/atoms/Button";
 
 export default function ContactCard() {
   return (
@@ -26,14 +27,7 @@ export default function ContactCard() {
               can we collaborate.
             </p>
           </div>
-          <div>
-            <Link
-              href="/contact"
-              className="py-2 px-4 bg-neutral-600 hover:bg-neutral-700 text-neutral-200 rounded-lg "
-            >
-              Contact Me
-            </Link>
-          </div>
+          <Button href="/contact">Contact Me</Button>
         </div>
       </div>
     </div>
