@@ -1,54 +1,53 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// GET: Ambil semua proyek dengan format sesuai dummy data
+const transformProjectData = (project) => {
+  const tech_stack = project.techStacks.map((pts) => ({
+    id: pts.techStack.id,
+    title: pts.techStack.title,
+    iconName: pts.techStack.iconName,
+    iconType: pts.techStack.iconType,
+  }));
+
+  const tooltip = tech_stack.map((ts) => ts.title);
+
+  return {
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    slug: project.slug,
+    link_demo: project.link_demo,
+    link_github: project.link_github,
+    tech_stack: tech_stack,
+    tooltip: tooltip,
+    aos_delay: project.aos_delay,
+    image: project.image,
+    is_show: project.is_show,
+    is_featured: project.is_featured,
+    params: {
+      slug: project.params_slug,
+    },
+  };
+};
+
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
       include: {
         techStacks: {
-          // Ini adalah tabel penghubung
           include: {
-            techStack: true, // Sertakan detail TechStack terkait
+            techStack: true,
           },
         },
       },
       orderBy: {
-        id: "asc", // Urutkan berdasarkan ID agar konsisten, sesuaikan jika perlu
+        id: "asc",
       },
     });
 
-    const transformedProjects = projects.map((project) => {
-      // Mengubah relasi techStacks menjadi format tech_stack yang diinginkan
-      const tech_stack = project.techStacks.map((pts) => ({
-        title: pts.techStack.title,
-        iconName: pts.techStack.iconName, // Mengirimkan nama ikon
-        iconType: pts.techStack.iconType, // Mengirimkan tipe ikon (REACT_ICON/IMAGE_URL)
-        // Catatan: Komponen React itu sendiri (<SiJavascript />) TIDAK BISA dikirim dari backend.
-        // Anda harus me-render ikon di frontend berdasarkan iconName dan iconType.
-      }));
-
-      // Membuat tooltip dari tech_stack
-      const tooltip = tech_stack.map((ts) => ts.title);
-
-      return {
-        id: project.id,
-        title: project.title,
-        description: project.description,
-        slug: project.slug,
-        link_demo: project.link_demo,
-        link_github: project.link_github,
-        tech_stack: tech_stack,
-        tooltip: tooltip,
-        aos_delay: project.aos_delay,
-        image: project.image,
-        is_show: project.is_show,
-        is_featured: project.is_featured,
-        params: {
-          slug: project.params_slug,
-        },
-      };
-    });
+    const transformedProjects = projects.map((project) =>
+      transformProjectData(project)
+    );
 
     return NextResponse.json(transformedProjects, { status: 200 });
   } catch (error) {
@@ -60,7 +59,6 @@ export async function GET() {
   }
 }
 
-// POST: Buat proyek baru dari format yang mirip dummy data
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -74,12 +72,10 @@ export async function POST(req) {
       is_show,
       is_featured,
       aos_delay,
-      params, // Menerima objek params
-      tech_stack, // Menerima array objek tech_stack
-      // tooltip field akan diabaikan karena tidak ada di schema.prisma
+      params,
+      tech_stack,
     } = body;
 
-    // Validasi input dasar, sesuaikan untuk params.slug
     if (
       !title ||
       !description ||
@@ -99,18 +95,14 @@ export async function POST(req) {
       );
     }
 
-    // Ekstrak params_slug dari objek params
     const params_slug = params.slug;
 
-    // Proses tech_stack: Dapatkan ID TechStack dari database berdasarkan judul
     let techStackIdsToConnect = [];
     if (tech_stack && tech_stack.length > 0) {
-      // Ambil semua tech stack dari DB sekali untuk performa
       const allTechStacks = await prisma.techStack.findMany({
-        select: { id: true, title: true }, // Hanya ambil id dan title
+        select: { id: true, title: true },
       });
 
-      // Buat map judul ke ID untuk pencarian cepat
       const techStackMap = new Map(
         allTechStacks.map((ts) => [ts.title, ts.id])
       );
@@ -124,6 +116,7 @@ export async function POST(req) {
             console.warn(
               `TechStack with title '${item.title}' not found. It will not be linked.`
             );
+
             return NextResponse.json(
               { error: `TechStack '${item.title}' not found.` },
               { status: 400 }
@@ -144,9 +137,8 @@ export async function POST(req) {
         is_show: is_show ?? false,
         is_featured: is_featured ?? false,
         aos_delay: aos_delay ?? 0,
-        params_slug, // Gunakan params_slug yang sudah diekstrak
+        params_slug,
         ...(techStackIdsToConnect.length > 0 && {
-          // Hanya tambahkan jika ada tech stack untuk dihubungkan
           techStacks: {
             create: techStackIdsToConnect.map((techStackId) => ({
               techStack: {
@@ -158,7 +150,6 @@ export async function POST(req) {
       },
     });
 
-    // Transformasi respons POST agar mirip dengan format GET
     const createdProjectWithRelations = await prisma.project.findUnique({
       where: { id: newProject.id },
       include: {
@@ -170,30 +161,9 @@ export async function POST(req) {
       },
     });
 
-    const transformedNewProject = {
-      id: createdProjectWithRelations.id,
-      title: createdProjectWithRelations.title,
-      description: createdProjectWithRelations.description,
-      slug: createdProjectWithRelations.slug,
-      link_demo: createdProjectWithRelations.link_demo,
-      link_github: createdProjectWithRelations.link_github,
-      tech_stack: createdProjectWithRelations.techStacks.map((pts) => ({
-        title: pts.techStack.title,
-        iconName: pts.techStack.iconName,
-        iconType: pts.techStack.iconType,
-      })),
-      tooltip: createdProjectWithRelations.techStacks.map(
-        (pts) => pts.techStack.title
-      ),
-      aos_delay: createdProjectWithRelations.aos_delay,
-      image: createdProjectWithRelations.image,
-      is_show: createdProjectWithRelations.is_show,
-      is_featured: createdProjectWithRelations.is_featured,
-      params: {
-        slug: createdProjectWithRelations.params_slug,
-      },
-    };
-
+    const transformedNewProject = transformProjectData(
+      createdProjectWithRelations
+    );
     return NextResponse.json(transformedNewProject, { status: 201 });
   } catch (error) {
     console.error("Error creating project:", error);

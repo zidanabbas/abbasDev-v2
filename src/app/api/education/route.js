@@ -1,13 +1,11 @@
-// src/app/api/education/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Menggunakan path alias
+import prisma from "@/lib/prisma";
 
-// GET: Ambil semua data pendidikan
 export async function GET() {
   try {
     const educationList = await prisma.education.findMany({
       orderBy: {
-        year: "asc", // Urutkan berdasarkan tahun
+        year: "asc",
       },
     });
     return NextResponse.json(educationList, { status: 200 });
@@ -20,15 +18,12 @@ export async function GET() {
   }
 }
 
-// POST: Buat data pendidikan baru
 export async function POST(req) {
   try {
     const body = await req.json();
     const { title, logo, href, year, school, gtw, jurusan } = body;
 
-    // Validasi input dasar
     if (!title || !logo || !year || !school || !jurusan) {
-      // gtw dan href opsional
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }

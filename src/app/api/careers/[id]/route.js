@@ -1,10 +1,8 @@
-// src/app/api/careers/[id]/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Menggunakan path alias
+import prisma from "@/lib/prisma";
 
-// GET: Ambil karir berdasarkan ID
 export async function GET(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
 
   try {
     const career = await prisma.career.findUnique({
@@ -24,14 +22,12 @@ export async function GET(req, { params }) {
   }
 }
 
-// PUT: Perbarui karir berdasarkan ID
 export async function PUT(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
   try {
     const body = await req.json();
     const { name, logo, link, location, date, during, profession } = body;
 
-    // Validasi dasar: Setidaknya satu field harus disediakan untuk update
     if (
       !name &&
       !logo &&
@@ -63,7 +59,6 @@ export async function PUT(req, { params }) {
   } catch (error) {
     console.error(`Error updating career with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json({ error: "Career not found" }, { status: 404 });
     }
     return NextResponse.json(
@@ -73,9 +68,8 @@ export async function PUT(req, { params }) {
   }
 }
 
-// DELETE: Hapus karir berdasarkan ID
 export async function DELETE(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
   try {
     await prisma.career.delete({
       where: { id: id },
@@ -87,7 +81,6 @@ export async function DELETE(req, { params }) {
   } catch (error) {
     console.error(`Error deleting career with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json({ error: "Career not found" }, { status: 404 });
     }
     return NextResponse.json(

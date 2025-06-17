@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// Fungsi bantuan untuk transformasi data proyek
-// Ini sama dengan logika transformasi di GET /api/projects/route.js
 const transformProjectData = (project) => {
   const tech_stack = project.techStacks.map((pts) => ({
     title: pts.techStack.title,
@@ -31,9 +29,8 @@ const transformProjectData = (project) => {
   };
 };
 
-// GET: Ambil proyek berdasarkan ID
 export async function GET(req, { params }) {
-  const { id } = await params; // ID dari URL adalah String (CUID)
+  const { id } = await params;
 
   try {
     const project = await prisma.project.findUnique({
@@ -51,7 +48,6 @@ export async function GET(req, { params }) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
-    // Transformasi data agar sesuai dengan format dummy
     const transformedProject = transformProjectData(project);
     return NextResponse.json(transformedProject, { status: 200 });
   } catch (error) {
@@ -63,9 +59,8 @@ export async function GET(req, { params }) {
   }
 }
 
-// PUT: Perbarui proyek berdasarkan ID
 export async function PUT(req, { params }) {
-  const { id } = await params; // ID dari URL adalah String (CUID)
+  const { id } = await params;
   try {
     const body = await req.json();
     const {
@@ -78,11 +73,10 @@ export async function PUT(req, { params }) {
       is_show,
       is_featured,
       aos_delay,
-      params: incomingParams, // Menerima objek params
-      tech_stack, // Menerima array objek tech_stack
+      params: incomingParams,
+      tech_stack,
     } = body;
 
-    // Validasi dasar: Setidaknya satu field harus disediakan untuk update
     if (
       !title &&
       !description &&
@@ -102,7 +96,6 @@ export async function PUT(req, { params }) {
       );
     }
 
-    // Siapkan data untuk update Prisma
     const dataToUpdate = {};
     if (title) dataToUpdate.title = title;
     if (description) dataToUpdate.description = description;
@@ -117,17 +110,13 @@ export async function PUT(req, { params }) {
     if (incomingParams && incomingParams.slug)
       dataToUpdate.params_slug = incomingParams.slug;
 
-    // Proses tech_stack untuk update relasi many-to-many
     if (tech_stack) {
-      // Hanya update jika tech_stack disediakan di body
-      // Hapus relasi ProjectTechStack yang ada untuk proyek ini terlebih dahulu
       await prisma.projectTechStack.deleteMany({
         where: { projectId: id },
       });
 
       let techStackIdsToConnect = [];
       if (tech_stack.length > 0) {
-        // Ambil semua tech stack dari DB sekali untuk performa
         const allTechStacks = await prisma.techStack.findMany({
           select: { id: true, title: true },
         });
@@ -149,7 +138,6 @@ export async function PUT(req, { params }) {
         }
       }
 
-      // Buat relasi baru
       dataToUpdate.techStacks = {
         create: techStackIdsToConnect.map((techStackId) => ({
           techStack: {
@@ -164,7 +152,6 @@ export async function PUT(req, { params }) {
       data: dataToUpdate,
     });
 
-    // Ambil proyek yang diperbarui dengan relasi untuk respons
     const updatedProjectWithRelations = await prisma.project.findUnique({
       where: { id: updatedProject.id },
       include: {
@@ -176,7 +163,6 @@ export async function PUT(req, { params }) {
       },
     });
 
-    // Transformasi respons agar sesuai dengan format dummy
     const transformedUpdatedProject = transformProjectData(
       updatedProjectWithRelations
     );
@@ -184,11 +170,9 @@ export async function PUT(req, { params }) {
   } catch (error) {
     console.error(`Error updating project with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
     if (error.code === "P2002" && error.meta?.target?.includes("slug")) {
-      // Slug conflict
       return NextResponse.json(
         { error: "Slug already exists for another project." },
         { status: 409 }
@@ -201,13 +185,9 @@ export async function PUT(req, { params }) {
   }
 }
 
-// DELETE: Hapus proyek berdasarkan ID
 export async function DELETE(req, { params }) {
-  const { id } = await params; // ID dari URL adalah String (CUID)
+  const { id } = await params;
   try {
-    // Karena onDelete: Cascade sudah diatur di schema.prisma
-    // pada relasi ProjectTechStack, kita hanya perlu menghapus Project.
-    // Relasi yang terhubung akan otomatis dihapus oleh database.
     await prisma.project.delete({
       where: { id: id },
     });
@@ -218,11 +198,9 @@ export async function DELETE(req, { params }) {
   } catch (error) {
     console.error(`Error deleting project with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
-    // Jika masih ada error P2003 (Foreign Key constraint),
-    // artinya onDelete: Cascade belum aktif atau ada relasi lain yang menghalangi.
+
     if (error.code === "P2003") {
       return NextResponse.json(
         {

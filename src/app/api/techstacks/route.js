@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// GET: Ambil semua tech stack
 export async function GET() {
   try {
     const techStacks = await prisma.techStack.findMany();
@@ -15,20 +14,18 @@ export async function GET() {
   }
 }
 
-// POST: Buat tech stack baru
 export async function POST(req) {
   try {
     const body = await req.json();
     const { title, iconName, iconType } = body;
 
-    // Validasi input dasar
     if (!title || !iconName || !iconType) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
-    // Validasi iconType sesuai enum
+
     if (!["REACT_ICON", "IMAGE_URL"].includes(iconType)) {
       return NextResponse.json(
         { error: "Invalid iconType. Must be REACT_ICON or IMAGE_URL." },

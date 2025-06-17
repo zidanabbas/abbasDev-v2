@@ -1,10 +1,8 @@
-// app/api/projecttechstacks/[id]/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Sesuaikan path jika berbeda
+import prisma from "@/lib/prisma";
 
-// GET: Ambil relasi ProjectTechStack berdasarkan ID (ID dari tabel penghubung itu sendiri)
 export async function GET(req, { params }) {
-  const { id } = await params; // ID dari URL (e.g., /api/projecttechstacks/clx1abcde...)
+  const { id } = await params;
 
   try {
     const projectTechStack = await prisma.projectTechStack.findUnique({
@@ -32,7 +30,6 @@ export async function GET(req, { params }) {
   }
 }
 
-// DELETE: Hapus relasi ProjectTechStack berdasarkan ID (ID dari tabel penghubung itu sendiri)
 export async function DELETE(req, { params }) {
   const { id } = await params;
   try {
@@ -46,7 +43,6 @@ export async function DELETE(req, { params }) {
   } catch (error) {
     console.error(`Error deleting ProjectTechStack with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json(
         { error: "ProjectTechStack relation not found" },
         { status: 404 }

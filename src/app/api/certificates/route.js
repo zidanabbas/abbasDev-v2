@@ -1,8 +1,6 @@
-// src/app/api/certificates/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Menggunakan path alias
+import prisma from "@/lib/prisma";
 
-// GET: Ambil semua data sertifikat
 export async function GET() {
   try {
     const certificates = await prisma.certificate.findMany({
@@ -20,7 +18,6 @@ export async function GET() {
   }
 }
 
-// POST: Buat data sertifikat baru
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -35,7 +32,6 @@ export async function POST(req) {
       slug,
     } = body;
 
-    // Validasi input dasar
     if (
       !title ||
       !image ||
@@ -58,7 +54,7 @@ export async function POST(req) {
         description,
         diberikan,
         berlaku,
-        id_certificate, // Akan disimpan jika disediakan, atau null jika opsional di skema
+        id_certificate,
         issuer,
         slug,
       },

@@ -1,8 +1,6 @@
-// src/app/api/careers/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Menggunakan path alias
+import prisma from "@/lib/prisma";
 
-// GET: Ambil semua data karir
 export async function GET() {
   try {
     const careers = await prisma.career.findMany({
@@ -20,13 +18,11 @@ export async function GET() {
   }
 }
 
-// POST: Buat data karir baru
 export async function POST(req) {
   try {
     const body = await req.json();
     const { name, logo, link, location, date, during, profession } = body;
 
-    // Validasi input dasar
     if (!name || !logo || !location || !date || !during || !profession) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -38,7 +34,7 @@ export async function POST(req) {
       data: {
         name,
         logo,
-        link, // Opsional jika skema memperbolehkan
+        link,
         location,
         date,
         during,

@@ -1,10 +1,8 @@
-// src/app/api/education/[id]/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Menggunakan path alias
+import prisma from "@/lib/prisma";
 
-// GET: Ambil pendidikan berdasarkan ID
 export async function GET(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
 
   try {
     const education = await prisma.education.findUnique({
@@ -27,14 +25,12 @@ export async function GET(req, { params }) {
   }
 }
 
-// PUT: Perbarui pendidikan berdasarkan ID
 export async function PUT(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
   try {
     const body = await req.json();
     const { title, logo, href, year, school, gtw, jurusan } = body;
 
-    // Validasi dasar: Setidaknya satu field harus disediakan untuk update
     if (!title && !logo && !href && !year && !school && !gtw && !jurusan) {
       return NextResponse.json(
         { error: "No fields to update provided" },
@@ -58,7 +54,6 @@ export async function PUT(req, { params }) {
   } catch (error) {
     console.error(`Error updating education with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json(
         { error: "Education not found" },
         { status: 404 }
@@ -71,9 +66,8 @@ export async function PUT(req, { params }) {
   }
 }
 
-// DELETE: Hapus pendidikan berdasarkan ID
 export async function DELETE(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
   try {
     await prisma.education.delete({
       where: { id: id },
@@ -85,7 +79,6 @@ export async function DELETE(req, { params }) {
   } catch (error) {
     console.error(`Error deleting education with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json(
         { error: "Education not found" },
         { status: 404 }

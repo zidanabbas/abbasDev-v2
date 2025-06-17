@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-// GET: Ambil semua relasi ProjectTechStack
 export async function GET() {
   try {
     const projectTechStacks = await prisma.projectTechStack.findMany({
@@ -20,14 +19,11 @@ export async function GET() {
   }
 }
 
-// POST: Buat relasi ProjectTechStack baru
-// Ini biasanya digunakan untuk mengaitkan proyek dengan tech stack yang sudah ada
 export async function POST(req) {
   try {
     const body = await req.json();
     const { projectId, techStackId } = body;
 
-    // Validasi input dasar
     if (!projectId || !techStackId) {
       return NextResponse.json(
         { error: "Missing required fields: projectId and techStackId" },
@@ -38,10 +34,10 @@ export async function POST(req) {
     const newProjectTechStack = await prisma.projectTechStack.create({
       data: {
         project: {
-          connect: { id: parseInt(projectId) }, // ID Project adalah Int
+          connect: { id: parseInt(projectId) },
         },
         techStack: {
-          connect: { id: techStackId }, // ID TechStack adalah String (CUID)
+          connect: { id: techStackId },
         },
       },
     });
@@ -49,7 +45,7 @@ export async function POST(req) {
     return NextResponse.json(newProjectTechStack, { status: 201 });
   } catch (error) {
     console.error("Error creating ProjectTechStack:", error);
-    // Tangani error jika relasi sudah ada (unique constraint)
+
     if (
       error.code === "P2002" &&
       error.meta?.target?.includes("projectId") &&
@@ -60,7 +56,7 @@ export async function POST(req) {
         { status: 409 }
       );
     }
-    // Tangani error jika Project atau TechStack tidak ditemukan
+
     if (error.code === "P2025") {
       return NextResponse.json(
         { error: "Project or TechStack not found." },

@@ -1,10 +1,8 @@
-// src/app/api/certificates/[id]/route.js
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma"; // Menggunakan path alias
+import prisma from "@/lib/prisma";
 
-// GET: Ambil sertifikat berdasarkan ID
 export async function GET(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
 
   try {
     const certificate = await prisma.certificate.findUnique({
@@ -27,9 +25,8 @@ export async function GET(req, { params }) {
   }
 }
 
-// PUT: Perbarui sertifikat berdasarkan ID
 export async function PUT(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
   try {
     const body = await req.json();
     const {
@@ -43,7 +40,6 @@ export async function PUT(req, { params }) {
       slug,
     } = body;
 
-    // Validasi dasar: Setidaknya satu field harus disediakan untuk update
     if (
       !title &&
       !image &&
@@ -77,14 +73,12 @@ export async function PUT(req, { params }) {
   } catch (error) {
     console.error(`Error updating certificate with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json(
         { error: "Certificate not found" },
         { status: 404 }
       );
     }
     if (error.code === "P2002" && error.meta?.target?.includes("slug")) {
-      // Slug conflict
       return NextResponse.json(
         { error: "Slug already exists for another certificate." },
         { status: 409 }
@@ -97,9 +91,8 @@ export async function PUT(req, { params }) {
   }
 }
 
-// DELETE: Hapus sertifikat berdasarkan ID
 export async function DELETE(req, { params }) {
-  const { id } = await params; // ID dari URL (string CUID)
+  const { id } = await params;
   try {
     await prisma.certificate.delete({
       where: { id: id },
@@ -111,7 +104,6 @@ export async function DELETE(req, { params }) {
   } catch (error) {
     console.error(`Error deleting certificate with ID ${id}:`, error);
     if (error.code === "P2025") {
-      // Record not found
       return NextResponse.json(
         { error: "Certificate not found" },
         { status: 404 }

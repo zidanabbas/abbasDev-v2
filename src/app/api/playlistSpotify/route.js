@@ -1,7 +1,3 @@
-// src/app/api/playlistSpotify/route.js
-// File ini saat ini tidak digunakan oleh SpotifyCard.js.
-// Jika Anda bermaksud menggunakannya, Anda perlu mengimplementasikan fungsi getPlaylist
-// di lib/spotify.js dan mungkin meneruskan ID playlist.
 import { getAccessToken } from "../../../lib/spotify";
 import { NextResponse } from "next/server";
 
@@ -17,8 +13,6 @@ export async function GET() {
     );
   }
 
-  // Untuk saat ini, rute ini hanya mengembalikan pesan sukses jika access token berhasil didapatkan.
-  // Anda dapat memodifikasi ini jika Anda ingin menggunakannya untuk mengambil detail playlist tertentu.
   return NextResponse.json(
     { message: "Access token obtained successfully", accessToken: accessToken },
     { status: 200 }
