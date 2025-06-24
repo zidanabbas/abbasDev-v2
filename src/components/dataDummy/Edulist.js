@@ -1,5 +1,14 @@
 export const Edulist = [
   {
+    title: "Dicoding",
+    logo: "https://res.cloudinary.com/dlshk9mf6/image/upload/v1750791907/dicoding_cover_e6ftms.jpg",
+    href: "https://www.dicoding.com/",
+    year: "September 2023 - November 2023",
+    school: "Dicoding Academy",
+    gtw: "-",
+    jurusan: "Computer Programming",
+  },
+  {
     title: "SMA PGRI 3 Jakarta Selatan",
     logo: "https://res.cloudinary.com/dlshk9mf6/image/upload/v1699433050/abbasImage/PGRI_3_JAKARTA_rtjyrn.png",
     href: "https://www.smapgri3jkt.sch.id/",
