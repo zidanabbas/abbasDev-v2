@@ -1,18 +1,20 @@
-// src/app/lib/spotify.js
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const basic = Buffer.from(`${client_id}:${client_secret}`, "utf8").toString(
-  "base64"
-);
+const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
 
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT =
   "https://api.spotify.com/v1/me/player/currently-playing";
+const PLAYER_ENDPOINT = "https://api.spotify.com/v1/me/player";
+const PLAYLISTS_ENDPOINT = "https://api.spotify.com/v1/me/playlists";
+const RECENTLY_PLAYED_ENDPOINT =
+  "https://api.spotify.com/v1/me/player/recently-played";
+const FOLLOWED_ARTISTS_ENDPOINT =
+  "https://api.spotify.com/v1/me/following?type=artist";
 
 export async function getAccessToken() {
-  // ambil data token
   const res = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
     headers: {
@@ -23,19 +25,14 @@ export async function getAccessToken() {
       grant_type: "refresh_token",
       refresh_token,
     }),
+    cache: "no-store",
   });
 
   if (!res.ok) {
-    const errorText = await res.text();
     console.error(
       "[spotify.js] Error fetching access token:",
       res.status,
-      errorText,
-      "Request Body:",
-      new URLSearchParams({
-        grant_type: "refresh_token",
-        refresh_token,
-      }).toString() // Log body
+      await res.text()
     );
     return null;
   }
@@ -45,28 +42,86 @@ export async function getAccessToken() {
 }
 
 export async function getNowPlaying() {
-  const access_token = await getAccessToken();
-
-  if (!access_token) {
-    return null;
-  }
+  const token = await getAccessToken();
+  if (!token) return null;
 
   const res = await fetch(NOW_PLAYING_ENDPOINT, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
 
-  if (res.status === 204) {
-    return null;
-  }
+  if (res.status === 204 || res.status > 400) return null;
+  return res.json();
+}
 
-  if (res.status > 400) {
-    console.error(res.status, await res.text());
-    return null;
-  }
+export async function pauseTrack() {
+  const token = await getAccessToken();
+  if (!token) return null;
+  return fetch(`${PLAYER_ENDPOINT}/pause`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
 
+export async function playTrack() {
+  const token = await getAccessToken();
+  if (!token) return null;
+  return fetch(`${PLAYER_ENDPOINT}/play`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function nextTrack() {
+  const token = await getAccessToken();
+  if (!token) return null;
+  return fetch(`${PLAYER_ENDPOINT}/next`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function previousTrack() {
+  const token = await getAccessToken();
+  if (!token) return null;
+  return fetch(`${PLAYER_ENDPOINT}/previous`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function getPlaylists() {
+  const token = await getAccessToken();
+  if (!token) return [];
+  const res = await fetch(PLAYLISTS_ENDPOINT, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+  if (!res.ok) return [];
   const data = await res.json();
-  return data;
+  return data.items || [];
+}
+
+export async function getRecentTracks() {
+  const token = await getAccessToken();
+  if (!token) return [];
+  const res = await fetch(RECENTLY_PLAYED_ENDPOINT, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.items || [];
+}
+
+export async function getFollowedArtists() {
+  const token = await getAccessToken();
+  if (!token) return [];
+  const res = await fetch(FOLLOWED_ARTISTS_ENDPOINT, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.artists?.items || [];
 }

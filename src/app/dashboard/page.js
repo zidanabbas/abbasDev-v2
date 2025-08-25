@@ -22,13 +22,13 @@ export default function Dashboard() {
     <>
       <ContainerAOS>
         <div className="h-full">
+          <Spotify />
+          <Divider className="my-6" />
           <Header />
           <DashedDivider />
           <Stats />
           <Divider className="my-6" />
           <GithubHeader />
-          <Divider className="my-6" />
-          <Spotify />
         </div>
       </ContainerAOS>
     </>
