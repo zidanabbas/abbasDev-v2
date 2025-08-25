@@ -12,10 +12,14 @@ const nextConfig = {
         hostname: "i.scdn.co",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "mosaic.scdn.co", // tambahkan ini
+        pathname: "/**",
+      },
     ],
   },
   env: {
-    // Tambahkan URL produksi atau URL yang sesuai dengan kebutuhan kamu
     NEXT_PUBLIC_BASE_URL:
       process.env.NODE_ENV === "production"
         ? "https://abbasdev.vercel.app/"
