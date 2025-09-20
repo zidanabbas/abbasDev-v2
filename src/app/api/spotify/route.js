@@ -4,31 +4,45 @@ import {
   getPlaylists,
   getRecentTracks,
   getFollowedArtists,
-  playTrack,
-  pauseTrack,
-  nextTrack,
-  previousTrack,
 } from "../../../lib/spotify.js";
 
 export const dynamic = "force-dynamic";
+
+// Cache in-memory untuk now-playing
+let nowPlayingCache = {
+  data: null,
+  lastFetch: 0,
+};
+
+const CACHE_DURATION = 5000; // cache 5 detik
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type");
 
-    let data;
     switch (type) {
       case "now-playing":
-        data = await getNowPlaying();
+        const now = Date.now();
 
-        // Perbaikan: Jika tidak ada lagu yang diputar, kembalikan status `currentlyPlaying: false`.
-        if (!data?.item) {
-          return NextResponse.json({ currentlyPlaying: false });
+        // Gunakan cache kalau masih valid
+        if (
+          now - nowPlayingCache.lastFetch < CACHE_DURATION &&
+          nowPlayingCache.data
+        ) {
+          return NextResponse.json(nowPlayingCache.data);
         }
 
-        // Perbaikan: Tambahkan `progress_ms` dan `total_ms` ke respons API
-        return NextResponse.json({
+        // Fetch Spotify hanya kalau cache expired
+        const data = await getNowPlaying();
+
+        if (!data?.item) {
+          const response = { currentlyPlaying: false };
+          nowPlayingCache = { data: response, lastFetch: now };
+          return NextResponse.json(response);
+        }
+
+        const response = {
           currentlyPlaying: data.is_playing,
           name: data.item.name,
           href: data.item.external_urls.spotify,
@@ -41,19 +55,22 @@ export async function GET(request) {
           playlistName: data.item.album.name,
           progress_ms: data.progress_ms,
           total_ms: data.item.duration_ms,
-        });
+        };
+
+        nowPlayingCache = { data: response, lastFetch: now };
+        return NextResponse.json(response);
 
       case "playlists":
-        data = await getPlaylists();
-        return NextResponse.json(data);
+        const playlists = await getPlaylists();
+        return NextResponse.json(playlists);
 
       case "recent-tracks":
-        data = await getRecentTracks();
-        return NextResponse.json(data);
+        const recent = await getRecentTracks();
+        return NextResponse.json(recent);
 
       case "followed-artists":
-        data = await getFollowedArtists();
-        return NextResponse.json(data);
+        const artists = await getFollowedArtists();
+        return NextResponse.json(artists);
 
       default:
         return NextResponse.json(

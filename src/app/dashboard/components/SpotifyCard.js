@@ -24,19 +24,20 @@ export default function SpotifyCard() {
   const featuredArtist = followedArtistsData?.[0];
 
   return (
-    <div className="min-h-screen ">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen dark:bg-gray-900 rounded-lg py-4">
+      {/* Padding responsif untuk semua device */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4 sm:gap-0">
-          <h1 className="text-2xl font-semibold text-gray-900">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
             Welcome Zidane!
           </h1>
           <div className="flex items-center gap-4 w-full sm:w-auto">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-300 w-4 h-4" />
               <Input
                 placeholder="Search your song..."
-                className="pl-10 w-full sm:w-80 bg-white border-gray-200"
+                className="pl-10 w-full sm:w-80 bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
               />
             </div>
             <Button variant="ghost" size="icon" className="flex-shrink-0">
@@ -53,18 +54,14 @@ export default function SpotifyCard() {
             {/* Featured Artist / Banner */}
             {featuredArtist && (
               <div className="relative mb-8 rounded-2xl overflow-hidden">
-                {/* Background Image */}
                 <Image
                   src={featuredArtist.images?.[0]?.url || "/placeholder.svg"}
                   alt={featuredArtist.name}
                   fill
                   className="object-cover"
                 />
-
-                {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-red-400 opacity-50"></div>
 
-                {/* Konten */}
                 <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center text-white">
                   <div className="mb-4 sm:mb-0">
                     <div className="flex items-center gap-2 mb-2">
@@ -100,7 +97,7 @@ export default function SpotifyCard() {
 
             {/* Popular Releases */}
             <section>
-              <h3 className="text-xl font-semibold mb-6 text-gray-900">
+              <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
                 Popular Releases
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -113,10 +110,10 @@ export default function SpotifyCard() {
                       height={120}
                       className="rounded-lg object-cover w-full h-auto"
                     />
-                    <p className="mt-2 text-sm font-medium text-gray-900 truncate w-full">
+                    <p className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100 truncate w-full">
                       {item.name}
                     </p>
-                    <p className="text-xs text-gray-500 truncate w-full">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate w-full">
                       {item.release_date}
                     </p>
                   </div>
@@ -126,7 +123,7 @@ export default function SpotifyCard() {
 
             {/* Recent Played */}
             <section>
-              <h3 className="text-xl font-semibold mb-6 text-gray-900">
+              <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
                 Recent Played
               </h3>
               <div className="space-y-4">
@@ -135,12 +132,12 @@ export default function SpotifyCard() {
                   return (
                     <div
                       key={index}
-                      className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+                      className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     >
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="text-gray-400"
+                        className="text-gray-400 dark:text-gray-300"
                       >
                         <Play className="w-4 h-4" />
                       </Button>
@@ -152,15 +149,15 @@ export default function SpotifyCard() {
                         className="rounded-lg object-cover"
                       />
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-900 truncate">
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 truncate">
                           {track.name}
                         </h4>
-                        <p className="text-sm text-gray-500 truncate">
+                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                           {(track.artists || []).map((a) => a.name).join(", ")}
                         </p>
                       </div>
-                      <div className="flex items-center gap-6 text-sm text-gray-500">
-                        <span className="text-xs text-gray-400 hidden sm:block">
+                      <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-xs text-gray-400 dark:text-gray-500 hidden sm:block">
                           {new Date(item.played_at).toLocaleTimeString()}
                         </span>
                         <Button variant="ghost" size="icon">
@@ -177,8 +174,10 @@ export default function SpotifyCard() {
           {/* Right Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Now Playing */}
-            <div className="bg-white rounded-2xl p-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Now Playing</h3>
+            <div className="bg-white rounded-2xl p-6 dark:bg-gray-800">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                Now Playing
+              </h3>
               {nowPlayingData && nowPlayingData.currentlyPlaying ? (
                 <div className="flex items-center gap-4">
                   <Image
@@ -192,11 +191,11 @@ export default function SpotifyCard() {
                     <Link
                       href={nowPlayingData.href || "#"}
                       target="_blank"
-                      className="font-medium text-gray-900 hover:underline truncate"
+                      className="font-medium text-gray-900 dark:text-gray-100 hover:underline truncate"
                     >
                       {nowPlayingData.name}
                     </Link>
-                    <p className="text-sm text-gray-500 truncate">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                       {(nowPlayingData.artists || [])
                         .map((a) => a.name)
                         .join(", ")}
@@ -204,16 +203,16 @@ export default function SpotifyCard() {
                   </div>
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   Tidak ada yang sedang diputar
                 </p>
               )}
             </div>
 
             {/* Followed Artists */}
-            <div className="bg-white rounded-2xl p-6">
+            <div className="bg-white rounded-2xl p-6 dark:bg-gray-800">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">
                   Followed Artists
                 </h3>
                 <Button variant="ghost" size="icon">
@@ -235,7 +234,7 @@ export default function SpotifyCard() {
                           .join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <p className="text-xs text-gray-600 truncate">
+                    <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
                       {artist.name}
                     </p>
                   </div>
