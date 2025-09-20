@@ -11,16 +11,23 @@ import useHasMounted from "@/components/hooks/useHasMounted";
 import GitHubCalendar from "react-github-calendar";
 
 function GithubHeader() {
-  const { theme, setTheme } = useTheme();
-  const [loading, setLoading] = useState(false);
+  const { theme } = useTheme();
+  const [loading, setLoading] = useState(true); // Mulai dengan loading=true
   const mounted = useHasMounted();
 
   useEffect(() => {
-    setLoading(true),
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-  }, [mounted]);
+    // Jalankan efek ini hanya di klien setelah mount
+    setLoading(false);
+  }, []); // [] agar hanya dijalankan sekali
+
+  if (!mounted) {
+    return (
+      <div className="p-2 bg-neutral-50 dark:bg-neutral-900 rounded flex justify-center items-center overflow-hidden mx-auto xl:w-[822px] md:w-[480px] lg:w-[750px] ">
+        {/* Opsional: Render placeholder atau skeleton di server */}
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -40,7 +47,7 @@ function GithubHeader() {
           blockMargin={4}
           blockSize={14}
           fontSize={12}
-          loading={loading ? true : false}
+          loading={loading}
           renderBlock={(block, activity) => (
             <Tooltip
               content={`${activity.count} activities on ${activity.date}`}

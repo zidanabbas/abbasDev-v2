@@ -9,7 +9,7 @@ export default function Spotify() {
     <div className="space-y-6">
       <div className="space-y-2">
         <Heading title="Spotify" icon={<BiLogoSpotify size={24} />} />
-        <SubHeading>{/* <p>Fetch API from Spotify</p> */}</SubHeading>
+        {/* <SubHeading><p>Fetch API from Spotify</p></SubHeading> */}
       </div>
       <SpotifyCard />
     </div>
