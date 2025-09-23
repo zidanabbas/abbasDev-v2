@@ -22,16 +22,16 @@ model Certificate {
 }
 
 model Career {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   name       String
   logo       String
   link       String?
-  location   String
-  date       String
-  during     String
   profession String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  location   String
+  startDate  DateTime? // tanggal mulai
+  endDate    DateTime? // null kalau masih aktif
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Project {
