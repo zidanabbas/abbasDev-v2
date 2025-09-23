@@ -14,15 +14,11 @@ export default function HeaderHome() {
         </div>
       </div>
       <ul className="flex md:space-x-8 space-x-0 px-5 py-2 md:flex-row flex-col ">
-        <li className="list-disc text-md">Beginner Front End Dev</li>
+        <li className="list-disc text-md">Frontend Developer</li>
         <li className="list-disc text-md">Based in Jakarta 🇮🇩</li>
       </ul>
       <p className="my-2 md:leading-9 leading-7 text-sm">
-        An enthusiastic and experienced junior Front-end developer with a strong
-        focus on front-end development. Proficient in design and possessing a
-        deep understanding of all aspects of web technology. A collaborative
-        team player dedicated to creating efficient, scalable, and visually
-        appealing web applications.
+      An enthusiastic and dedicated Frontend Developer with a passion for building applications that are not only visually appealing and user-friendly, but also efficient and scalable. I have a strong foundation in translating design concepts into seamless web functionality. As a collaborative team player, I am committed to creating innovative and high-quality web solutions.
       </p>
     </div>
   );

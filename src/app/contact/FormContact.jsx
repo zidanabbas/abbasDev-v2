@@ -66,9 +66,6 @@ export default function FormContact() {
               hours.
             </p>
             <div className="space-y-2 text-sm">
-              <p className="flex items-center">
-                <span className="mr-2">📞</span> +62896-5478-6299
-              </p>
               <a
                 className="flex items-center hover:text-slate-500  min-w-fit"
                 href="mailto:zidan.abbas28@gmail.com"

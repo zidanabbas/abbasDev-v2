@@ -1,11 +1,14 @@
-function formatMonthYear(date) {
-  const d = new Date(date);
+// Format tanggal ke "Mon YYYY" atau "Present" jika kosong
+export function formatDate(dateString) {
+  if (!dateString) return "Present";
+  const d = new Date(dateString);
   return d.toLocaleDateString("en-US", {
-    month: "short",
     year: "numeric",
+    month: "short",
   });
 }
 
+// Hitung durasi dari startDate sampai endDate atau sekarang jika endDate null
 export function calculateDuration(startDate, endDate) {
   if (!startDate) return "";
   const start = new Date(startDate);
@@ -23,4 +26,9 @@ export function calculateDuration(startDate, endDate) {
   if (years === 0) return `${months} month(s)`;
   if (months === 0) return `${years} year(s)`;
   return `${years} year(s) ${months} month(s)`;
+}
+
+// Fungsi helper untuk otomatis endDate menjadi now jika null
+export function getEndDate(endDate) {
+  return endDate ? new Date(endDate) : new Date();
 }
