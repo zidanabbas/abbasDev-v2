@@ -29,7 +29,7 @@ export default function SpotifyCard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4 sm:gap-0">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
             Welcome Zidane!
           </h1>
           <div className="flex items-center gap-4 w-full sm:w-auto">

@@ -110,9 +110,10 @@ export default function SpotifyTop() {
           : "p-4 bg-white dark:bg-gray-800 rounded-t-xl"
       }`}
     >
+      {/* Perubahan di sini */}
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-        {/* Album Art & Info */}
-        <div className="flex items-center gap-4 min-w-0">
+        {/* 1. Bagian Kiri: Album Art & Info */}
+        <div className="flex items-center gap-4 min-w-0 flex-1">
           <Link
             href={href}
             target="_blank"
@@ -144,10 +145,8 @@ export default function SpotifyTop() {
           )}
         </div>
 
-        {/* Controls */}
-        <div
-          className={`flex items-center gap-4 ${isScrolled ? "mx-auto" : ""}`}
-        >
+        {/* 2. Bagian Tengah: Controls */}
+        <div className="flex items-center gap-4">
           <SkipBack
             size={18}
             onClick={() => handleControl("prev")}
@@ -166,23 +165,25 @@ export default function SpotifyTop() {
           />
         </div>
 
-        {/* Progress Bar */}
-        {!isScrolled && (
-          <div className="flex-1 flex items-center gap-2 min-w-0">
-            <span className="w-10 text-right text-xs">
-              {formatTime(progressTime.current)}
-            </span>
-            <div className="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700">
-              <div
-                className="h-1 rounded-full bg-gray-700 dark:bg-gray-300"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <span className="w-10 text-left text-xs">
-              {formatTime(progressTime.total)}
-            </span>
-          </div>
-        )}
+        {/* 3. Bagian Kanan: Progress Bar (Penyeimbang) */}
+        <div className="flex-1 flex items-center gap-2 min-w-0 justify-end">
+          {!isScrolled && (
+            <>
+              <span className="w-10 text-right text-xs">
+                {formatTime(progressTime.current)}
+              </span>
+              <div className="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700">
+                <div
+                  className="h-1 rounded-full bg-gray-700 dark:bg-gray-300"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <span className="w-10 text-left text-xs">
+                {formatTime(progressTime.total)}
+              </span>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

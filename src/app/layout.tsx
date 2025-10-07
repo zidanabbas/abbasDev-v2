@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.css";
@@ -5,7 +7,6 @@ import { Providers } from "./providers";
 import Layouts from "@/components/Layouts.js";
 import SpotifyTop from "@/components/elements/SpotifyTop";
 import TopLoader from "@/components/elements/TopLoader";
-import { Suspense } from "react";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -61,6 +62,7 @@ export default function RootLayout({
             <TopLoader />
           </Suspense>
           <Layouts>{children}</Layouts>
+          <SpeedInsights />
         </Providers>
       </body>
     </html>

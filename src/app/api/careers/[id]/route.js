@@ -1,20 +1,28 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { calculateDuration } from "@/utils/calculateDuration";
 
 export async function GET(req, { params }) {
-  const { id } = await params;
-
   try {
+    const { id } = params;
+
     const career = await prisma.career.findUnique({
-      where: { id: id },
+      where: { id },
     });
 
     if (!career) {
       return NextResponse.json({ error: "Career not found" }, { status: 404 });
     }
-    return NextResponse.json(career, { status: 200 });
+
+    return NextResponse.json(
+      {
+        ...career,
+        duration: calculateDuration(career.startDate, career.endDate),
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error(`Error fetching career with ID ${id}:`, error);
+    console.error("Error fetching career:", error);
     return NextResponse.json(
       { error: "Failed to fetch career" },
       { status: 500 }
@@ -22,69 +30,41 @@ export async function GET(req, { params }) {
   }
 }
 
-export async function PUT(req, { params }) {
-  const { id } = await params;
+export async function POST(req) {
   try {
     const body = await req.json();
-    const { name, logo, link, location, date, during, profession } = body;
+    const { name, logo, link, location, startDate, endDate, profession } = body;
 
-    if (
-      !name &&
-      !logo &&
-      !link &&
-      !location &&
-      !date &&
-      !during &&
-      !profession
-    ) {
+    if (!name || !logo || !location || !startDate || !profession) {
       return NextResponse.json(
-        { error: "No fields to update provided" },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    const updatedCareer = await prisma.career.update({
-      where: { id: id },
+    const newCareer = await prisma.career.create({
       data: {
         name,
         logo,
         link,
         location,
-        date,
-        during,
+        startDate,
+        endDate,
         profession,
       },
     });
-    return NextResponse.json(updatedCareer, { status: 200 });
-  } catch (error) {
-    console.error(`Error updating career with ID ${id}:`, error);
-    if (error.code === "P2025") {
-      return NextResponse.json({ error: "Career not found" }, { status: 404 });
-    }
-    return NextResponse.json(
-      { error: "Failed to update career" },
-      { status: 500 }
-    );
-  }
-}
 
-export async function DELETE(req, { params }) {
-  const { id } = await params;
-  try {
-    await prisma.career.delete({
-      where: { id: id },
-    });
     return NextResponse.json(
-      { message: "Career deleted successfully" },
-      { status: 200 }
+      {
+        ...newCareer,
+        duration: calculateDuration(newCareer.startDate, newCareer.endDate),
+      },
+      { status: 201 }
     );
   } catch (error) {
-    console.error(`Error deleting career with ID ${id}:`, error);
-    if (error.code === "P2025") {
-      return NextResponse.json({ error: "Career not found" }, { status: 404 });
-    }
+    console.error("Error creating career:", error);
     return NextResponse.json(
-      { error: "Failed to delete career" },
+      { error: "Failed to create career" },
       { status: 500 }
     );
   }

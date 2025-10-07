@@ -1,41 +1,49 @@
-"use client"; // Tambahkan ini karena kita akan menggunakan React Hooks
-
+"use client";
 import { useState, useEffect } from "react";
 import { BiBriefcaseAlt2 } from "react-icons/bi";
 import Heading from "@/components/elements/Heading.js";
 import SubHeading from "@/components/elements/SubHeading.js";
 import Link from "next/link";
 import Image from "next/image";
+import { formatDate, calculateDuration } from "@/utils/calculateDuration";
 
 export default function Career() {
-  const [careers, setCareers] = useState([]); // State untuk menyimpan data karir dari API
-  const [loading, setLoading] = useState(true); // State untuk status loading
-  const [error, setError] = useState(null); // State untuk error
+  const [careers, setCareers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCareers = async () => {
       try {
-        setLoading(true); // Set loading ke true saat memulai fetch
-        setError(null); // Reset error
-        const response = await fetch("/api/careers"); // Panggil API karir Anda
-        if (!response.ok) {
+        setLoading(true);
+        setError(null);
+        const response = await fetch("/api/careers");
+        if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
-        setCareers(data); // Simpan data ke state
+
+        // Sorting data untuk menempatkan "Present" di paling atas
+        const sortedCareers = [...data].sort((a, b) => {
+          // Jika a.endDate adalah null (present), taruh di paling atas
+          if (a.endDate === null) return -1;
+          // Jika b.endDate adalah null (present), taruh di atas a
+          if (b.endDate === null) return 1;
+          // Jika tidak ada yang present, urutkan berdasarkan tanggal mulai (terbaru ke terlama)
+          return new Date(b.startDate) - new Date(a.startDate);
+        });
+
+        setCareers(sortedCareers);
       } catch (err) {
         console.error("Failed to fetch careers:", err);
-        setError("Failed to load career data. Please try again later."); // Set pesan error
+        setError("Failed to load career data. Please try again later.");
       } finally {
-        setLoading(false); // Set loading ke false setelah fetch selesai (berhasil atau gagal)
+        setLoading(false);
       }
     };
+    fetchCareers();
+  }, []);
 
-    fetchCareers(); // Panggil fungsi fetch saat komponen di-mount
-  }, []); // Array dependensi kosong berarti efek ini hanya berjalan sekali saat mount
-
-  // UI saat loading
-  if (loading) {
+  if (loading)
     return (
       <div className="space-y-6">
         <div className="space-y-2">
@@ -54,10 +62,8 @@ export default function Career() {
         </div>
       </div>
     );
-  }
 
-  // UI saat error
-  if (error) {
+  if (error)
     return (
       <div className="space-y-6">
         <div className="space-y-2">
@@ -74,10 +80,8 @@ export default function Career() {
         <div className="text-center py-10 text-red-500">{error}</div>
       </div>
     );
-  }
 
-  // UI saat tidak ada data
-  if (careers.length === 0) {
+  if (careers.length === 0)
     return (
       <div className="space-y-6">
         <div className="space-y-2">
@@ -96,9 +100,7 @@ export default function Career() {
         </div>
       </div>
     );
-  }
 
-  // UI saat data berhasil dimuat
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -110,10 +112,22 @@ export default function Career() {
         </SubHeading>
         <div className="grid lg:grid-cols-2 gap-4 mt-4">
           {careers.map(
-            ({ id, name, link, logo, location, date, during, profession }) => {
+            ({
+              id,
+              name,
+              link,
+              logo,
+              location,
+              startDate,
+              endDate,
+              profession,
+            }) => {
+              const date = `${formatDate(startDate)} - ${formatDate(endDate)}`;
+              const during = calculateDuration(startDate, endDate);
+
               return (
                 <div
-                  key={id} // Gunakan 'id' dari API sebagai key yang unik
+                  key={id}
                   className="rounded-xl transition-all duration-300 shadow-sm lg:hover:shadow-md flex items-center gap-5 py-4 px-6 border border-neutral-300 dark:border-neutral-800 dark:bg-neutral-800"
                 >
                   <div className="bg-neutral-300 items-center dark:bg-neutral-600 rounded-full">
@@ -128,7 +142,7 @@ export default function Career() {
                   <div className="flex-col flex space-y-2">
                     <h1>{profession}</h1>
                     <div className="flex items-center gap-1 md:gap-2 text-xs mt-1">
-                      {link ? ( // Tampilkan Link jika ada
+                      {link ? (
                         <Link
                           href={link}
                           className="text-neutral-500 dark:text-neutral-400 underline underline-offset-2"
@@ -137,7 +151,6 @@ export default function Career() {
                           {name}
                         </Link>
                       ) : (
-                        // Jika tidak ada link, tampilkan nama saja
                         <p className="text-neutral-500 dark:text-neutral-400">
                           {name}
                         </p>
