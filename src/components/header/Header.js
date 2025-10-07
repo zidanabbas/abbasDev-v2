@@ -6,7 +6,7 @@ export default function HeaderHome() {
     <div className="flex flex-col">
       <div className="flex flex-row justify-between">
         <h1 className="md:text-3xl text-2xl font-medium flex gap-1">
-          Hi, I'm Abbas <p className="animate-shake">👋</p>
+          Hi, I'm abbas <p className="animate-shake">👋</p>
         </h1>
         <div className="flex items-center gap-3 px-2">
           <Coffee />
